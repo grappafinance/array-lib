@@ -106,6 +106,11 @@ contract IntArrayLibTester {
         return v;
     }
 
+    function add(int256[] memory a, int256[] memory b) external pure returns (int256[] memory) {
+        int256[] memory c = IntArrayLib.add(a, b);
+        return c;
+    }
+
     function subEachBy(int256[] memory x, int256 z) external pure returns (int256[] memory) {
         int256[] memory y = IntArrayLib.subEachBy(x, z);
         return y;
@@ -113,6 +118,26 @@ contract IntArrayLibTester {
 
     function addEachBy(int256[] memory x, int256 z) external pure returns (int256[] memory) {
         int256[] memory y = IntArrayLib.addEachBy(x, z);
+        return y;
+    }
+
+    function eachMul(int256[] memory x, int256 z) external pure returns (int256[] memory) {
+        int256[] memory y = IntArrayLib.eachMul(x, z);
+        return y;
+    }
+
+    function eachDiv(int256[] memory x, int256 z) external pure returns (int256[] memory) {
+        int256[] memory y = IntArrayLib.eachDiv(x, z);
+        return y;
+    }
+
+    function eachMulDivUp(int256[] memory x, int256 z, int256 d) external pure returns (int256[] memory) {
+        int256[] memory y = IntArrayLib.eachMulDivUp(x, z, d);
+        return y;
+    }
+
+    function eachMulDivDown(int256[] memory x, int256 z, int256 d) external pure returns (int256[] memory) {
+        int256[] memory y = IntArrayLib.eachMulDivDown(x, z, d);
         return y;
     }
 
@@ -141,6 +166,16 @@ contract IntArrayLibCoverage is Test {
         arr[2] = -2;
         arr[3] = 4;
         arr[4] = -3;
+        return arr;
+    }
+
+    function _getDefaultLarge() internal pure returns (int256[] memory) {
+        int256[] memory arr = new int256[](5);
+        arr[0] = 1e18;
+        arr[1] = 5e18;
+        arr[2] = -2e18;
+        arr[3] = 4e18;
+        arr[4] = -3e18;
         return arr;
     }
 
@@ -426,6 +461,18 @@ contract IntArrayLibCoverage is Test {
         assertEq(slice.length, 0);
     }
 
+    function testAdd() public {
+        int256[] memory arr1 = _getDefaultArray();
+        int256[] memory arr2 = _getDefaultArray();
+
+        int256[] memory sum = tester.add(arr1, arr2);
+        assertEq(sum[0], arr1[0] * 2);
+        assertEq(sum[1], arr1[1] * 2);
+        assertEq(sum[2], arr1[2] * 2);
+        assertEq(sum[3], arr2[3] * 2);
+        assertEq(sum[4], arr2[4] * 2);
+    }
+
     function testSubEachBy() public {
         // default [1, 5, -2, 4, -3]
         int256[] memory arr = _getDefaultArray();
@@ -448,6 +495,54 @@ contract IntArrayLibCoverage is Test {
         assertEq(result[2], -5);
         assertEq(result[3], 1);
         assertEq(result[4], -6);
+    }
+
+    function testEachMul() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory arr = _getDefaultArray();
+        int256[] memory result = tester.eachMul(arr, -100);
+
+        assertEq(result[0], -100);
+        assertEq(result[1], -500);
+        assertEq(result[2], 200);
+        assertEq(result[3], -400);
+        assertEq(result[4], 300);
+    }
+
+    function testEachDiv() public {
+        // default [1e18, 5e18, -2e18, 4e18, -3e18]
+        int256[] memory arr = _getDefaultLarge();
+        int256[] memory result = tester.eachDiv(arr, 1e18);
+
+        assertEq(result[0], 1);
+        assertEq(result[1], 5);
+        assertEq(result[2], -2);
+        assertEq(result[3], 4);
+        assertEq(result[4], -3);
+    }
+
+    function testEachMulDivUp() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory arr = _getDefaultArray();
+        int256[] memory result = tester.eachMulDivUp(arr, -1e20, -1e2);
+
+        assertEq(result[0], 1e18 + 1);
+        assertEq(result[1], 5e18 + 1);
+        assertEq(result[2], -2e18 + 1);
+        assertEq(result[3], 4e18 + 1);
+        assertEq(result[4], -3e18 + 1);
+    }
+
+    function testEachMulDivDown() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory arr = _getDefaultArray();
+        int256[] memory result = tester.eachMulDivDown(arr, -1e20, 1e2);
+
+        assertEq(result[0], -1e18);
+        assertEq(result[1], -5e18);
+        assertEq(result[2], 2e18);
+        assertEq(result[3], -4e18);
+        assertEq(result[4], 3e18);
     }
 
     function testDot() public {
