@@ -5,7 +5,6 @@ import {SafeCast} from "openzeppelin/utils/math/SafeCast.sol";
 
 library UintArrayLib {
     using SafeCast for uint256;
-    // using SafeCast for int256;
 
     error IndexOutOfBounds();
 
@@ -302,7 +301,7 @@ library UintArrayLib {
     }
 
     /**
-     * @dev return dot of 2 vector
+     * @dev return dot of 2 vectors
      *      will revert if 2 vectors has different length
      */
     function dot(uint256[] memory a, int256[] memory b) internal pure returns (int256 s) {

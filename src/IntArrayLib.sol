@@ -58,7 +58,7 @@ library IntArrayLib {
     }
 
     /**
-     * @dev Returns maximal elements comparedTo value
+     * @dev Returns maximal elements compared to value z
      * @return y array
      */
     function maximum(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
@@ -141,6 +141,9 @@ library IntArrayLib {
         quickSort(y, int256(0), int256(y.length - 1), idxs);
     }
 
+    /**
+     * @dev return a new sorted copy of array x
+     */
     function sort(int256[] memory x) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         populate(y, x, 0);
@@ -148,7 +151,14 @@ library IntArrayLib {
     }
 
     /**
-     * @dev quicksort implementation, sorts arr in place
+     * @dev sort array x in place with quick sort algorithm
+     */
+    function quickSort(int256[] memory x) internal pure {
+        quickSort(x, int256(0), int256(x.length - 1));
+    }
+
+    /**
+     * @dev sort arr[left:right] in place with quick sort algorithm
      */
     function quickSort(int256[] memory arr, int256 left, int256 right) internal pure {
         if (left == right) return;
@@ -204,12 +214,14 @@ library IntArrayLib {
     }
 
     /**
-     * @dev Sort Functions for Int
+     * @dev return a new array which is sorted by indexes array
+     * @param x original array
+     * @param idxs indexes to sort based on.
      */
-    function sortByIndexes(int256[] memory x, uint256[] memory z) internal pure returns (int256[] memory y) {
+    function sortByIndexes(int256[] memory x, uint256[] memory idxs) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
-            y[i] = x[z[i]];
+            y[i] = x[idxs[i]];
 
             unchecked {
                 ++i;
@@ -217,6 +229,9 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return a new array that append element v at the end of array x
+     */
     function append(int256[] memory x, int256 v) internal pure returns (int256[] memory y) {
         y = new int256[](x.length + 1);
         uint256 i;
@@ -230,6 +245,9 @@ library IntArrayLib {
         y[i] = v;
     }
 
+    /**
+     * @dev return a new array that's the result of concatting a and b
+     */
     function concat(int256[] memory a, int256[] memory b) internal pure returns (int256[] memory y) {
         y = new int256[](a.length + b.length);
         uint256 v;
@@ -253,7 +271,7 @@ library IntArrayLib {
     }
 
     /**
-     * @dev this function modifies memory x in place. Fills x with value v
+     * @dev Fills array x with value v in place.
      */
     function fill(int256[] memory x, int256 v) internal pure {
         for (uint256 i; i < x.length;) {
@@ -278,6 +296,12 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return the element at index i
+     *      if i is positive, it's the same as requesting x[i]
+     *      if i is negative, return the value positioned at -i from the end
+     * @param i can be positive or negative
+     */
     function at(int256[] memory x, int256 i) internal pure returns (int256) {
         int256 len = int256(x.length);
         if (i > 0) {
@@ -290,6 +314,14 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return a new array contains the copy from x[start] to x[end]
+     *      if i is positive, it's the same as requesting x[i]
+     *      if i is negative, return the value positioned at -i from the end
+     * @param x array to copy
+     * @param _start starting index, can be negative
+     * @param _start ending index (excluded), can be negative
+     */
     function slice(int256[] memory x, int256 _start, int256 _end) internal pure returns (int256[] memory a) {
         int256 len = int256(x.length);
         if (_start < 0) _start = len + _start;
@@ -311,6 +343,9 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return an array y, as a copy of x with y[i] = x[i] + z
+     */
     function addEachBy(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
@@ -322,6 +357,10 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return an array y as the sum of 2 same-length array
+     *      y[i] = a[i] + b[i]
+     */
     function add(int256[] memory a, int256[] memory b) internal pure returns (int256[] memory y) {
         y = new int256[](a.length);
         for (uint256 i; i < a.length;) {
@@ -333,6 +372,9 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return new array y, y[i] = x[i] * z / d (round down)
+     */
     function eachMulDivDown(int256[] memory x, int256 z, int256 d) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
@@ -344,6 +386,9 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return new array y, y[i] = x[i] * z / d (round up)
+     */
     function eachMulDivUp(int256[] memory x, int256 z, int256 d) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
@@ -355,6 +400,9 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return new array y, y[i] = x[i] * z
+     */
     function eachMul(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
@@ -366,6 +414,9 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return new array y, y[i] = x[i] / z
+     */
     function eachDiv(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
@@ -377,6 +428,10 @@ library IntArrayLib {
         }
     }
 
+    /**
+     * @dev return dot of 2 vectors
+     *      will revert if 2 vectors have different length
+     */
     function dot(int256[] memory a, int256[] memory b) internal pure returns (int256 s) {
         for (uint256 i; i < a.length;) {
             s += a[i] * b[i];
