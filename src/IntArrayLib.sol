@@ -320,7 +320,7 @@ library IntArrayLib {
      *      if i is negative, return the value positioned at -i from the end
      * @param x array to copy
      * @param _start starting index, can be negative
-     * @param _start ending index (excluded), can be negative
+     * @param _start ending index, can be negative
      */
     function slice(int256[] memory x, int256 _start, int256 _end) internal pure returns (int256[] memory a) {
         int256 len = int256(x.length);
