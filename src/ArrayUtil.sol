@@ -51,6 +51,9 @@ library ArrayUtil {
         }
     }
 
+    /**
+     * @dev return the min and max for an array.
+     */
     function minMax(uint256[] memory x) internal pure returns (uint256 min_, uint256 max_) {
         if (x.length == 1) return (x[0], x[0]);
         (min_, max_) = (x[0], x[0]);
@@ -69,7 +72,6 @@ library ArrayUtil {
 
     /**
      * @dev Returns maximal element in array
-     * @return m
      */
     function max(int256[] memory x) internal pure returns (int256 m) {
         m = x[0];
@@ -84,6 +86,9 @@ library ArrayUtil {
         }
     }
 
+    /**
+     * @dev Returns maximal element in array
+     */
     function max(uint256[] memory x) internal pure returns (uint256 m) {
         m = x[0];
         for (uint256 i; i < x.length;) {
@@ -114,7 +119,7 @@ library ArrayUtil {
     }
 
     /**
-     * @dev Removes element at index in a new unsigned int array, does not change x memory in place
+     * @dev Return a new array that removes element at index z.
      * @return y new array
      */
     function remove(uint256[] memory x, uint256 z) internal pure returns (uint256[] memory y) {
@@ -130,7 +135,7 @@ library ArrayUtil {
     }
 
     /**
-     * @dev Removes element at index in a new signed int array, does not change x memory in place
+     * @dev Return a new array that removes element at index z.
      * @return y new array
      */
     function remove(int256[] memory x, uint256 z) internal pure returns (int256[] memory y) {
@@ -203,6 +208,10 @@ library ArrayUtil {
         }
     }
 
+    /**
+     * @dev Compute sum of all elements
+     * @return s sum
+     */
     function sum(uint256[] memory x) internal pure returns (uint256 s) {
         for (uint256 i; i < x.length;) {
             s += x[i];
@@ -214,14 +223,15 @@ library ArrayUtil {
     }
 
     /**
-     * @dev put the min of last p elements in array at position p.
+     * @dev get the sorted array and index order used to sort.
+     * @return y copy of x but sorted
+     * @return idxs indexes of input array used for sorting.
      */
-    function argSort(uint256[] memory x) internal pure returns (uint256[] memory y, uint256[] memory ixArray) {
-        ixArray = new uint256[](x.length);
+    function argSort(uint256[] memory x) internal pure returns (uint256[] memory y, uint256[] memory idxs) {
+        idxs = new uint256[](x.length);
         // fill in index array
         for (uint256 i; i < x.length;) {
-            ixArray[i] = i;
-
+            idxs[i] = i;
             unchecked {
                 ++i;
             }
@@ -230,7 +240,7 @@ library ArrayUtil {
         y = new uint256[](x.length);
         populate(y, x, 0);
         // sort
-        quickSort(y, int256(0), int256(y.length - 1), ixArray);
+        quickSort(y, int256(0), int256(y.length - 1), idxs);
     }
 
     function sort(uint256[] memory x) internal pure returns (uint256[] memory y) {
@@ -302,7 +312,6 @@ library ArrayUtil {
         // fill in index array
         for (uint256 i; i < x.length;) {
             ixArray[i] = i;
-
             unchecked {
                 ++i;
             }
