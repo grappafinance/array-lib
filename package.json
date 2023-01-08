@@ -1,0 +1,11 @@
+{
+  "name": "@grappafinance/array-utils",
+  "author": "antoncoding",
+  "version": "1.0.1",
+  "description": "array utils",
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "husky": "^8.0.1"
+  }
+}
