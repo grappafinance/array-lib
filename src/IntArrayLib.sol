@@ -391,6 +391,7 @@ library IntArrayLib {
     function eachMulDivDown(int256[] memory x, int256 z, int256 d) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
+            // todo: remove duplicate d != 0 check
             y[i] = (x[i] * z) / d;
 
             unchecked {
@@ -405,6 +406,7 @@ library IntArrayLib {
     function eachMulDivUp(int256[] memory x, int256 z, int256 d) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
+            // todo: actually rounding instead of + 1
             y[i] = ((x[i] * z) / d) + 1;
 
             unchecked {
