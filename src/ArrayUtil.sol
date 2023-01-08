@@ -10,8 +10,7 @@ library ArrayUtil {
     error IndexOutOfBounds();
 
     /**
-     * @dev Returns minimal element in array
-     * @return m
+     * @dev returns min value of aray x
      */
     function min(int256[] memory x) internal pure returns (int256 m) {
         m = x[0];
@@ -25,6 +24,9 @@ library ArrayUtil {
         }
     }
 
+    /**
+     * @dev returns min value of aray x and its index
+     */
     function minWithIndex(int256[] memory x) internal pure returns (int256 m, uint256 idx) {
         m = x[0];
         idx = 0;
@@ -196,7 +198,6 @@ library ArrayUtil {
 
     /**
      * @dev Compute sum of all elements
-     * @return s sum
      */
     function sum(int256[] memory x) internal pure returns (int256 s) {
         for (uint256 i; i < x.length;) {
@@ -250,7 +251,7 @@ library ArrayUtil {
     }
 
     /**
-     * @dev quicksort implementation, sorts arr input IN PLACE
+     * @dev sort arr[left:right] in place with quick sort algorithm
      */
     function quickSort(uint256[] memory arr, int256 left, int256 right) internal pure {
         if (left == right) return;
@@ -305,13 +306,15 @@ library ArrayUtil {
     }
 
     /**
-     * @dev  sort functions for int
+     * @dev get the sorted array and index order used to sort.
+     * @return y copy of x but sorted
+     * @return idxs indexes of input array used for sorting.
      */
-    function argSort(int256[] memory x) internal pure returns (int256[] memory y, uint256[] memory ixArray) {
-        ixArray = new uint256[](x.length);
+    function argSort(int256[] memory x) internal pure returns (int256[] memory y, uint256[] memory idxs) {
+        idxs = new uint256[](x.length);
         // fill in index array
         for (uint256 i; i < x.length;) {
-            ixArray[i] = i;
+            idxs[i] = i;
             unchecked {
                 ++i;
             }
@@ -320,7 +323,7 @@ library ArrayUtil {
         y = new int256[](x.length);
         populate(y, x, 0);
         // sort
-        quickSort(y, int256(0), int256(y.length - 1), ixArray);
+        quickSort(y, int256(0), int256(y.length - 1), idxs);
     }
 
     function sort(int256[] memory x) internal pure returns (int256[] memory y) {
