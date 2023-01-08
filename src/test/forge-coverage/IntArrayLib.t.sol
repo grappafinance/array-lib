@@ -144,9 +144,27 @@ contract IntArrayLibCoverage is Test {
         assertEq(tester.max(arr), 5);
     }
 
+    function testMaximum() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory arr = _getDefaultArray();
+        int256[] memory y = tester.maximum(arr, 0);
+        assertEq(y[0], 1);
+        assertEq(y[1], 5);
+        assertEq(y[2], 0);
+        assertEq(y[3], 4);
+        assertEq(y[4], 0);
+    }
+
     function testMin() public {
         int256[] memory arr = _getDefaultArray();
         assertEq(tester.min(arr), -3);
+    }
+
+    function testMinWithIndex() public {
+        int256[] memory arr = _getDefaultArray();
+        (int256 min_, uint256 idx) = tester.minWithIndex(arr);
+        assertEq(min_, -3);
+        assertEq(idx, 4);
     }
 
     function testSum() public {
