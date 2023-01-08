@@ -6,7 +6,6 @@ import {Test} from "forge-std/Test.sol";
 import {UintArrayLib} from "../../UintArrayLib.sol";
 
 contract UintArrayLibTester {
-
     function max(uint256[] memory x) external pure returns (uint256) {
         uint256 m = UintArrayLib.max(x);
         return m;
@@ -32,7 +31,6 @@ contract UintArrayLibTester {
         return y;
     }
 
-    
     // function indexOf(uint256[] memory x, uint256 v) external pure returns (bool, uint256) {
     //     for (uint256 i; i < x.length;) {
     //         if (x[i] == v) {
@@ -46,10 +44,6 @@ contract UintArrayLibTester {
     //     return (false, 0);
     // }
 
-   
-    
-
-    
     // function argSort(uint256[] memory x) external pure returns (uint256[] memory y, uint256[] memory idxs) {
     //     idxs = new uint256[](x.length);
     //     // fill in index array
@@ -82,7 +76,6 @@ contract UintArrayLibTester {
     //     quickSort(x, int256(0), int256(x.length - 1));
     // }
 
-    
     // function quickSort(uint256[] memory arr, int256 left, int256 right) external pure {
     //     if (left == right) return;
     //     int256 i = left;
@@ -107,7 +100,6 @@ contract UintArrayLibTester {
     //     if (i < right) quickSort(arr, i, right);
     // }
 
-   
     // function quickSort(uint256[] memory arr, int256 left, int256 right, uint256[] memory indexArray) external pure {
     //     if (left == right) return;
     //     int256 i = left;
@@ -133,7 +125,6 @@ contract UintArrayLibTester {
     //     }
     // }
 
-    
     // function append(uint256[] memory x, uint256 v) external pure returns (uint256[] memory y) {
     //     y = new uint256[](x.length + 1);
     //     uint256 i;
@@ -172,7 +163,6 @@ contract UintArrayLibTester {
     //     }
     // }
 
-    
     // function populate(uint256[] memory a, uint256[] memory b) external pure {
     //     for (uint256 i; i < a.length;) {
     //         a[i] = b[i];
@@ -232,7 +222,6 @@ contract UintArrayLibTester {
     //     }
     // }
 
-   
     // function toInt256(uint256[] memory x) external pure returns (int256[] memory y) {
     //     y = new int256[](x.length);
     //     for (uint256 i; i < x.length;) {
@@ -251,7 +240,7 @@ contract UintArrayLibTester {
 contract UintArrayLibCoverage is Test {
     using UintArrayLib for uint256[];
 
-    UintArrayLibTester public tester; 
+    UintArrayLibTester public tester;
 
     function setUp() public {
         tester = new UintArrayLibTester();
