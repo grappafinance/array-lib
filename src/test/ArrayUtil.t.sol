@@ -3,8 +3,7 @@ pragma solidity ^0.8.0;
 
 import {Test, stdError} from "forge-std/Test.sol";
 
-import {ArrayUtil} from "../../libraries/ArrayUtil.sol";
-
+import {ArrayUtil} from "../ArrayUtil.sol";
 
 /**
  * Basic tests

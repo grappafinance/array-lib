@@ -374,9 +374,8 @@ library ArrayUtil {
     }
 
     /**
-     * End Sort Functions for Int ******
+     * @dev End Sort Functions for Int
      */
-
     function sortByIndexes(int256[] memory x, uint256[] memory z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
@@ -497,9 +496,9 @@ library ArrayUtil {
         }
     }
 
-    /*
-    @dev modifies memory a IN PLACE. Populates a starting at index z with values from b.
-    */
+    /**
+     * @dev modifies memory a IN PLACE. Populates a starting at index z with values from b.
+     **/
     function populate(int256[] memory a, int256[] memory b, uint256 z) internal pure {
         for (uint256 i; i < a.length;) {
             a[z + i] = b[i];
@@ -664,7 +663,6 @@ library ArrayUtil {
     /**
      * @dev converting array of variable types
      */
-
     function toInt256(uint256[] memory x) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
