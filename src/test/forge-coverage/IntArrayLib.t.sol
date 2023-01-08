@@ -413,8 +413,11 @@ contract IntArrayLibCoverage is Test {
         assertEq(tester.at(array1, -1), -3);
         assertEq(tester.at(array1, -2), 4);
 
-        vm.expectRevert(IntArrayLib.IndexOutOfBounds.selector);
+        // index underflow
+        vm.expectRevert(stdError.arithmeticError);
         tester.at(array1, -6);
+
+        // index out of bond
         vm.expectRevert(stdError.indexOOBError);
         tester.at(array1, 5);
     }

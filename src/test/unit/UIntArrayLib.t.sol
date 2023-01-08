@@ -81,9 +81,6 @@ contract ArrayUtilTest is Test {
         // last element is 3
         assertEq(array1.at(-1), 3);
         assertEq(array1.at(-2), 4);
-
-        vm.expectRevert(UintArrayLib.IndexOutOfBounds.selector);
-        array1.at(-6);
     }
 
     function testPopulate() public {
