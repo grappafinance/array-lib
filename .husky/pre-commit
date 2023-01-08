@@ -3,3 +3,4 @@
 
 forge fmt
 forge fmt && forge snapshot && git add .gas-snapshot
+forge fmt && forge snapshot && git add .gas-snapshot
