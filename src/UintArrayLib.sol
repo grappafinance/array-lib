@@ -303,6 +303,23 @@ library UintArrayLib {
     /**
      * @dev return dot of 2 vectors
      *      will revert if 2 vectors has different length
+     * @param a uint256 array
+     * @param b uint256 array
+     */
+    function dot(uint256[] memory a, uint256[] memory b) internal pure returns (uint256 s) {
+        for (uint256 i; i < a.length;) {
+            s += a[i] * b[i];
+            unchecked {
+                ++i;
+            }
+        }
+    }
+
+    /**
+     * @dev return dot of 2 vectors
+     *      will revert if 2 vectors has different length
+     * @param a uint256 array
+     * @param b int256 array
      */
     function dot(uint256[] memory a, int256[] memory b) internal pure returns (int256 s) {
         for (uint256 i; i < a.length;) {

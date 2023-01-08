@@ -86,53 +86,30 @@ contract UintArrayLibTester {
         return v;
     }
 
-    // function subEachFrom(uint256[] memory x, uint256 z) external pure returns (int256[] memory y) {
-    //     y = new int256[](x.length);
-    //     int256 intZ = z.toInt256();
-    //     for (uint256 i; i < x.length;) {
-    //         y[i] = intZ - x[i].toInt256();
+    function subEachFrom(uint256[] memory x, uint256 z) external pure returns (int256[] memory) {
+        int256[] memory y = UintArrayLib.subEachFrom(x, z);
+        return y;
+    }
 
-    //         unchecked {
-    //             ++i;
-    //         }
-    //     }
-    // }
+    function subEachBy(uint256[] memory x, uint256 z) external pure returns (int256[] memory) {
+        int256[] memory y = UintArrayLib.subEachBy(x, z);
+        return y;
+    }
 
-    // /**
-    //  * @dev return a new array y with y[i] = x[i] - z
-    //  */
-    // function subEachBy(uint256[] memory x, uint256 z) external pure returns (int256[] memory y) {
-    //     y = new int256[](x.length);
-    //     int256 intZ = z.toInt256();
-    //     for (uint256 i; i < x.length;) {
-    //         y[i] = x[i].toInt256() - intZ;
+    function dot(uint256[] memory a, int256[] memory b) external pure returns (int256) {
+        int256 m = UintArrayLib.dot(a, b);
+        return m;
+    }
 
-    //         unchecked {
-    //             ++i;
-    //         }
-    //     }
-    // }
+    function dot(uint256[] memory a, uint256[] memory b) external pure returns (uint256) {
+        uint256 m = UintArrayLib.dot(a, b);
+        return m;
+    }
 
-    // function dot(uint256[] memory a, int256[] memory b) external pure returns (int256 s) {
-    //     for (uint256 i; i < a.length;) {
-    //         s += int256(a[i]) * b[i];
-
-    //         unchecked {
-    //             ++i;
-    //         }
-    //     }
-    // }
-
-    // function toInt256(uint256[] memory x) external pure returns (int256[] memory y) {
-    //     y = new int256[](x.length);
-    //     for (uint256 i; i < x.length;) {
-    //         y[i] = x[i].toInt256();
-
-    //         unchecked {
-    //             ++i;
-    //         }
-    //     }
-    // }
+    function toInt256(uint256[] memory x) external pure returns (int256[] memory) {
+        int256[] memory y = UintArrayLib.toInt256(x);
+        return y;
+    }
 }
 
 /**
@@ -187,6 +164,20 @@ contract UintArrayLibCoverage is Test {
         (uint256 min_, uint256 max_) = tester.minMax(arr);
         assertEq(min_, 1);
         assertEq(max_, 5);
+    }
+
+    function testMinMax2() public {
+        uint256[] memory arr = new uint256[](5);
+        arr[0] = 9;
+        arr[1] = 5;
+        arr[2] = 2;
+        arr[3] = 10;
+        arr[4] = 8;
+        assertEq(tester.min(arr), 2);
+
+        (uint256 min_, uint256 max_) = tester.minMax(arr);
+        assertEq(min_, 2);
+        assertEq(max_, 10);
     }
 
     function testRemove() public {
@@ -308,6 +299,18 @@ contract UintArrayLibCoverage is Test {
         assertEq(newArr[4], newArr[9]);
     }
 
+    function testPopulate() public {
+        uint256[] memory empty = new uint256[](5);
+        uint256[] memory arr = _getDefaultArray();
+
+        uint256[] memory newArr = tester.populate(empty, arr);
+        assertEq(newArr[0], arr[0]);
+        assertEq(newArr[1], arr[1]);
+        assertEq(newArr[2], arr[2]);
+        assertEq(newArr[3], arr[3]);
+        assertEq(newArr[4], arr[4]);
+    }
+
     function testIndexSelector() public {
         uint256[] memory array1 = _getDefaultArray();
 
@@ -323,5 +326,60 @@ contract UintArrayLibCoverage is Test {
         tester.at(array1, -6);
         vm.expectRevert(stdError.indexOOBError);
         tester.at(array1, 5);
+    }
+
+    function testSubEachFrom() public {
+        // default [1, 5, 2, 4, 3]
+        uint256[] memory arr = _getDefaultArray();
+        int256[] memory result = tester.subEachFrom(arr, 3);
+
+        assertEq(result[0], 2);
+        assertEq(result[1], -2);
+        assertEq(result[2], 1);
+        assertEq(result[3], -1);
+        assertEq(result[4], 0);
+    }
+
+    function testSubEachBy() public {
+        // default [1, 5, 2, 4, 3]
+        uint256[] memory arr = _getDefaultArray();
+        int256[] memory result = tester.subEachBy(arr, 3);
+
+        assertEq(result[0], -2);
+        assertEq(result[1], 2);
+        assertEq(result[2], -1);
+        assertEq(result[3], 1);
+        assertEq(result[4], 0);
+    }
+
+    function testDot() public {
+        // default [1, 5, 2, 4, 3]
+        uint256[] memory arr = _getDefaultArray();
+        int256[] memory intArr = new int256[](5);
+        intArr[0] = 5;
+        intArr[1] = 2;
+        intArr[2] = 8;
+        intArr[3] = 0;
+        intArr[4] = -2;
+        int256 result = tester.dot(arr, intArr);
+        assertEq(result, 25); // 5 + 10 + 16 + 0 - 6
+    }
+
+    function testDotUintArr() public {
+        uint256[] memory a = _getDefaultArray();
+        uint256[] memory b = _getDefaultArray();
+
+        uint256 result = tester.dot(a, b);
+        assertEq(result, 55); // 1 + 25 + 4 + 16 + 9
+    }
+
+    function testToInt256() public {
+        uint256[] memory arr = _getDefaultArray();
+        int256[] memory result = tester.toInt256(arr);
+        assertEq(result[0], 1);
+        assertEq(result[1], 5);
+        assertEq(result[2], 2);
+        assertEq(result[3], 4);
+        assertEq(result[4], 3);
     }
 }
