@@ -304,8 +304,7 @@ library IntArrayLib {
      */
     function at(int256[] memory x, int256 i) internal pure returns (int256) {
         int256 len = int256(x.length);
-        if (i > 0) {
-            if (i > len) revert IndexOutOfBounds();
+        if (i >= 0) {
             return x[uint256(i)];
         } else {
             if (i < -len) revert IndexOutOfBounds();
@@ -344,12 +343,27 @@ library IntArrayLib {
     }
 
     /**
-     * @dev return an array y, as a copy of x with y[i] = x[i] + z
+     * @dev return an new array y with y[i] = x[i] + z
      */
     function addEachBy(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
             y[i] = x[i] + z;
+
+            unchecked {
+                ++i;
+            }
+        }
+    }
+
+    /**
+     * @dev return a new array y with y[i] = x[i] - z
+     */
+    function subEachBy(int256[] memory x, uint256 z) internal pure returns (int256[] memory y) {
+        y = new int256[](x.length);
+        int256 intZ = z.toInt256();
+        for (uint256 i; i < x.length;) {
+            y[i] = x[i] - intZ;
 
             unchecked {
                 ++i;
