@@ -31,50 +31,26 @@ contract UintArrayLibTester {
         return y;
     }
 
-    // function indexOf(uint256[] memory x, uint256 v) external pure returns (bool, uint256) {
-    //     for (uint256 i; i < x.length;) {
-    //         if (x[i] == v) {
-    //             return (true, i);
-    //         }
+    function indexOf(uint256[] memory x, uint256 v) external pure returns (bool, uint256) {
+        (bool found, uint256 index) = UintArrayLib.indexOf(x, v);
+        return (found, index);
+    }
 
-    //         unchecked {
-    //             ++i;
-    //         }
-    //     }
-    //     return (false, 0);
-    // }
+    function argSort(uint256[] memory x) external pure returns (uint256[] memory, uint256[] memory) {
+        (uint256[] memory y, uint256[] memory indexes) = UintArrayLib.argSort(x);
+        return (y, indexes);
+    }
 
-    // function argSort(uint256[] memory x) external pure returns (uint256[] memory y, uint256[] memory idxs) {
-    //     idxs = new uint256[](x.length);
-    //     // fill in index array
-    //     for (uint256 i; i < x.length;) {
-    //         idxs[i] = i;
-    //         unchecked {
-    //             ++i;
-    //         }
-    //     }
-    //     // initialize copy of x
-    //     y = new uint256[](x.length);
-    //     populate(y, x);
-    //     // sort
-    //     quickSort(y, int256(0), int256(y.length - 1), idxs);
-    // }
+    function sort(uint256[] memory x) external pure returns (uint256[] memory) {
+        uint256[] memory y = UintArrayLib.sort(x);
+        return y;
+    }
 
-    // /**
-    //  * @dev return a new sorted copy of array x
-    //  */
-    // function sort(uint256[] memory x) external pure returns (uint256[] memory y) {
-    //     y = new uint256[](x.length);
-    //     populate(y, x);
-    //     quickSort(y, int256(0), int256(y.length - 1));
-    // }
+    function quickSort(uint256[] memory x) external pure returns (uint256[] memory) {
+        UintArrayLib.quickSort(x);
 
-    // /**
-    //  * @dev sort array x in place with quick sort algorithm
-    //  */
-    // function quickSort(uint256[] memory x) external pure {
-    //     quickSort(x, int256(0), int256(x.length - 1));
-    // }
+        return x;
+    }
 
     // function quickSort(uint256[] memory arr, int256 left, int256 right) external pure {
     //     if (left == right) return;
@@ -283,5 +259,43 @@ contract UintArrayLibCoverage is Test {
         uint256[] memory removed = tester.remove(arr, 0);
         assertEq(removed[0], 5);
         assertEq(removed.length, 4);
+    }
+
+    function testIndexOf() public {
+        uint256[] memory arr = _getDefaultArray();
+        (bool found0, uint256 indexOf0) = tester.indexOf(arr, 0);
+        assertEq(found0, false);
+        assertEq(indexOf0, 0);
+
+        (bool found3, uint256 indexOf3) = tester.indexOf(arr, 3);
+        assertEq(found3, true);
+        assertEq(indexOf3, 4);
+    }
+
+    function testArgSort() public {
+        uint256[] memory arr = _getDefaultArray();
+        (uint256[] memory sorted, uint256[] memory indexes) = tester.argSort(arr);
+        assertEq(sorted[0], 1);
+        assertEq(sorted[1], 2);
+        assertEq(sorted[2], 3);
+        assertEq(sorted[3], 4);
+        assertEq(sorted[4], 5);
+
+        assertEq(indexes[0], 0); // index of v = 1
+        assertEq(indexes[1], 2); // index of v = 2
+        assertEq(indexes[2], 4);
+        assertEq(indexes[3], 3);
+        assertEq(indexes[4], 1);
+    }
+
+    function testSort() public {
+        uint256[] memory arr = _getDefaultArray();
+        arr = tester.sort(arr);
+
+        assertEq(arr[0], 1);
+        assertEq(arr[1], 2);
+        assertEq(arr[2], 3);
+        assertEq(arr[3], 4);
+        assertEq(arr[4], 5);
     }
 }
