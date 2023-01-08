@@ -262,7 +262,6 @@ library UintArrayLib {
     function at(uint256[] memory x, int256 i) internal pure returns (uint256) {
         int256 len = x.length.toInt256();
         if (i >= 0) {
-            if (i > len) revert IndexOutOfBounds();
             return x[uint256(i)];
         } else {
             if (i < -len) revert IndexOutOfBounds();

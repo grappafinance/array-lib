@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {Test} from "forge-std/Test.sol";
+import {Test, stdError} from "forge-std/Test.sol";
 
 import {UintArrayLib} from "../../UintArrayLib.sol";
 
@@ -77,7 +77,7 @@ contract UintArrayLibTester {
     }
 
     function populate(uint256[] memory a, uint256[] memory b) external pure returns (uint256[] memory) {
-        UintArrayLib.concat(a, b);
+        UintArrayLib.populate(a, b);
         return a;
     }
 
@@ -283,5 +283,45 @@ contract UintArrayLibCoverage is Test {
         assertEq(idxs[2], 2);
         assertEq(idxs[3], 4); // swapped
         assertEq(idxs[4], 3); // swapped
+    }
+
+    function testAppend() public {
+        uint256[] memory arr = _getDefaultArray();
+        arr = tester.append(arr, 1);
+        arr = tester.append(arr, 2);
+
+        assertEq(arr.length, 7);
+        assertEq(arr[5], 1);
+        assertEq(arr[6], 2);
+    }
+
+    function testConcat() public {
+        uint256[] memory array1 = _getDefaultArray();
+        uint256[] memory array2 = _getDefaultArray();
+
+        uint256[] memory newArr = tester.concat(array1, array2);
+        assertEq(newArr.length, 10);
+        assertEq(newArr[0], newArr[5]);
+        assertEq(newArr[1], newArr[6]);
+        assertEq(newArr[2], newArr[7]);
+        assertEq(newArr[3], newArr[8]);
+        assertEq(newArr[4], newArr[9]);
+    }
+
+    function testIndexSelector() public {
+        uint256[] memory array1 = _getDefaultArray();
+
+        // default [1, 5, 2, 4, 3]
+        assertEq(tester.at(array1, 0), 1);
+        assertEq(tester.at(array1, 4), 3);
+
+        // last element is 3
+        assertEq(tester.at(array1, -1), 3);
+        assertEq(tester.at(array1, -2), 4);
+
+        vm.expectRevert(UintArrayLib.IndexOutOfBounds.selector);
+        tester.at(array1, -6);
+        vm.expectRevert(stdError.indexOOBError);
+        tester.at(array1, 5);
     }
 }
