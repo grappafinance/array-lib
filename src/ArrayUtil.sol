@@ -498,7 +498,8 @@ library ArrayUtil {
 
     /**
      * @dev modifies memory a IN PLACE. Populates a starting at index z with values from b.
-     **/
+     *
+     */
     function populate(int256[] memory a, int256[] memory b, uint256 z) internal pure {
         for (uint256 i; i < a.length;) {
             a[z + i] = b[i];
