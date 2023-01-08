@@ -71,7 +71,6 @@ contract ArrayUtilTest is Test {
         array1.populate(array2, 1);
     }
 
-   
     function testSort() public {
         uint256[] memory array = new uint256[](5);
         array[0] = 400;
@@ -156,7 +155,6 @@ contract ArrayUtilTest is Test {
         assertEq(indexes[4], 0);
     }
 
-
     function testArgSortDupsEvenItems() public {
         uint256[] memory array = new uint256[](6);
         array[0] = 4;
@@ -184,5 +182,4 @@ contract ArrayUtilTest is Test {
         assertEq(indexes[4], 5);
         assertEq(indexes[5], 0);
     }
-
 }

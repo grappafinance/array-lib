@@ -5,7 +5,7 @@ import {SafeCast} from "openzeppelin/utils/math/SafeCast.sol";
 
 library UintArrayLib {
     using SafeCast for uint256;
-    using SafeCast for int256;
+    // using SafeCast for int256;
 
     error IndexOutOfBounds();
 
@@ -25,6 +25,9 @@ library UintArrayLib {
         }
     }
 
+    /**
+     * @dev Returns minimum element in array
+     */
     function min(uint256[] memory x) internal pure returns (uint256 m) {
         m = x[0];
         for (uint256 i = 1; i < x.length;) {
@@ -72,6 +75,11 @@ library UintArrayLib {
         }
     }
 
+    /**
+     * @dev Return index of the first element in array x with value v
+     * @return found set to true if found
+     * @return i index in the array
+     */
     function indexOf(uint256[] memory x, uint256 v) internal pure returns (bool, uint256) {
         for (uint256 i; i < x.length;) {
             if (x[i] == v) {
@@ -120,10 +128,20 @@ library UintArrayLib {
         quickSort(y, int256(0), int256(y.length - 1), idxs);
     }
 
+    /**
+     * @dev return a new sorted copy of array x
+     */
     function sort(uint256[] memory x) internal pure returns (uint256[] memory y) {
         y = new uint256[](x.length);
         populate(y, x, 0);
         quickSort(y, int256(0), int256(y.length - 1));
+    }
+
+    /**
+     * @dev sort array x in place with quick sort algorithm
+     */
+    function quickSort(uint256[] memory x) internal pure {
+        quickSort(x, int256(0), int256(x.length - 1));
     }
 
     /**
@@ -181,20 +199,9 @@ library UintArrayLib {
         }
     }
 
-    function append(bytes32[] memory x, bytes32 e) internal pure returns (bytes32[] memory y) {
-        y = new bytes32[](x.length + 1);
-        uint256 i;
-        for (i; i < x.length;) {
-            y[i] = x[i];
-
-            unchecked {
-                ++i;
-            }
-        }
-        y[i] = e;
-    }
-
-
+    /**
+     * @dev return a new array that append element v at the end of array x
+     */
     function append(uint256[] memory x, uint256 v) internal pure returns (uint256[] memory y) {
         y = new uint256[](x.length + 1);
         uint256 i;
@@ -208,6 +215,9 @@ library UintArrayLib {
         y[i] = v;
     }
 
+    /**
+     * @dev return a new array that's the result of concatting a and b
+     */
     function concat(uint256[] memory a, uint256[] memory b) internal pure returns (uint256[] memory y) {
         y = new uint256[](a.length + b.length);
         uint256 v;
@@ -243,6 +253,12 @@ library UintArrayLib {
         }
     }
 
+    /**
+     * @dev return the element at index i
+     *      if i is positive, it's the same as requesting x[i]
+     *      if i is negative, return the value positioned at -i from the end
+     * @param i can be positive or negative
+     */
     function at(uint256[] memory x, int256 i) internal pure returns (uint256) {
         int256 len = x.length.toInt256();
         if (i > 0) {
@@ -255,6 +271,9 @@ library UintArrayLib {
         }
     }
 
+    /**
+     * @dev return a new array y with y[i] = z - x[i]
+     */
     function subEachFrom(uint256[] memory x, uint256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         int256 intZ = z.toInt256();
@@ -267,6 +286,9 @@ library UintArrayLib {
         }
     }
 
+    /**
+     * @dev return a new array y with y[i] = x[i] - z
+     */
     function subEachBy(uint256[] memory x, uint256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         int256 intZ = z.toInt256();
@@ -279,6 +301,10 @@ library UintArrayLib {
         }
     }
 
+    /**
+     * @dev return dot of 2 vector
+     *      will revert if 2 vectors has different length
+     */
     function dot(uint256[] memory a, int256[] memory b) internal pure returns (int256 s) {
         for (uint256 i; i < a.length;) {
             s += int256(a[i]) * b[i];

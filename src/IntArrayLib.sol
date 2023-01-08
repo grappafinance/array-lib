@@ -279,7 +279,7 @@ library IntArrayLib {
     }
 
     function at(int256[] memory x, int256 i) internal pure returns (int256) {
-        int256 len = int(x.length);
+        int256 len = int256(x.length);
         if (i > 0) {
             if (i > len) revert IndexOutOfBounds();
             return x[uint256(i)];
@@ -291,7 +291,7 @@ library IntArrayLib {
     }
 
     function slice(int256[] memory x, int256 _start, int256 _end) internal pure returns (int256[] memory a) {
-        int256 len = int(x.length);
+        int256 len = int256(x.length);
         if (_start < 0) _start = len + _start;
         if (_end <= 0) _end = len + _end;
         if (_end < _start) return new int256[](0);

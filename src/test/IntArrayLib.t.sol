@@ -45,7 +45,7 @@ contract IntArrayLibTest is Test {
         slice = array.slice(-1, -2);
         assertEq(slice.length, 0);
     }
-   
+
     function testArgSortDupsInt() public {
         /// this implicitly tests sort and sort dups too
         int256[] memory array = new int256[](5);
