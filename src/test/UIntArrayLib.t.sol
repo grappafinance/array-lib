@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {Test, stdError} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 
 import {UintArrayLib} from "../UintArrayLib.sol";
 
@@ -92,13 +92,11 @@ contract ArrayUtilTest is Test {
         array2[0] = 1;
         array2[1] = 2;
 
-        array1.populate(array2, 0);
+        array1.populate(array2);
+
         assertEq(array1.length, 2);
         assertEq(array1[0], 1);
         assertEq(array1[1], 2);
-
-        vm.expectRevert(stdError.indexOOBError);
-        array1.populate(array2, 1);
     }
 
     function testSort() public {

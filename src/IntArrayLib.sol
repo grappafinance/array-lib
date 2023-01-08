@@ -136,7 +136,7 @@ library IntArrayLib {
         }
         // initialize copy of x
         y = new int256[](x.length);
-        populate(y, x, 0);
+        populate(y, x);
         // sort
         quickSort(y, int256(0), int256(y.length - 1), idxs);
     }
@@ -146,7 +146,7 @@ library IntArrayLib {
      */
     function sort(int256[] memory x) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
-        populate(y, x, 0);
+        populate(y, x);
         quickSort(y, int256(0), int256(y.length - 1));
     }
 
@@ -286,9 +286,9 @@ library IntArrayLib {
     /**
      * @dev modifies memory a IN PLACE. Populates a starting at index z with values from b.
      */
-    function populate(int256[] memory a, int256[] memory b, uint256 z) internal pure {
+    function populate(int256[] memory a, int256[] memory b) internal pure {
         for (uint256 i; i < a.length;) {
-            a[z + i] = b[i];
+            a[i] = b[i];
 
             unchecked {
                 ++i;
