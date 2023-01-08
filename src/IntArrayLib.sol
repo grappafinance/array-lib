@@ -359,11 +359,10 @@ library IntArrayLib {
     /**
      * @dev return a new array y with y[i] = x[i] - z
      */
-    function subEachBy(int256[] memory x, uint256 z) internal pure returns (int256[] memory y) {
+    function subEachBy(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
-        int256 intZ = z.toInt256();
         for (uint256 i; i < x.length;) {
-            y[i] = x[i] - intZ;
+            y[i] = x[i] - z;
 
             unchecked {
                 ++i;

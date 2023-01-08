@@ -91,7 +91,7 @@ contract IntArrayLibTester {
         return v;
     }
 
-    function subEachBy(int256[] memory x, uint256 z) external pure returns (int256[] memory) {
+    function subEachBy(int256[] memory x, int256 z) external pure returns (int256[] memory) {
         int256[] memory y = IntArrayLib.subEachBy(x, z);
         return y;
     }
