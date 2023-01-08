@@ -11,6 +11,41 @@ import {UintArrayLib} from "../UintArrayLib.sol";
 contract ArrayUtilTest is Test {
     using UintArrayLib for uint256[];
 
+    /**
+     * util for test data
+     */
+    function _getDefaultArray() internal pure returns (uint256[] memory) {
+        uint256[] memory arr = new uint256[](5);
+        arr[0] = 1;
+        arr[1] = 5;
+        arr[2] = 2;
+        arr[3] = 4;
+        arr[4] = 3;
+        return arr;
+    }
+
+    function testSum() public {
+        uint256[] memory arr = _getDefaultArray();
+        assertEq(arr.sum(), 15);
+    }
+
+    function testMax() public {
+        uint256[] memory arr = _getDefaultArray();
+        assertEq(arr.max(), 5);
+    }
+
+    function testMin() public {
+        uint256[] memory arr = _getDefaultArray();
+        assertEq(arr.min(), 1);
+    }
+
+    function testMinMax() public {
+        uint256[] memory arr = _getDefaultArray();
+        (uint256 min, uint256 max) = arr.minMax();
+        assertEq(min, 1);
+        assertEq(max, 5);
+    }
+
     function testConcat() public {
         uint256[] memory array1 = new uint256[](0);
         array1 = array1.append(1);
@@ -41,18 +76,13 @@ contract ArrayUtilTest is Test {
     }
 
     function testNegativeIndexSelector() public {
-        uint256[] memory array1 = new uint256[](0);
-        array1 = array1.append(1);
-        array1 = array1.append(2);
-        array1 = array1.append(3);
+        uint256[] memory array1 = _getDefaultArray();
 
-        uint256 element;
-
-        element = array1.at(-1);
+        uint256 element = array1.at(-1);
         assertEq(element, 3);
 
         vm.expectRevert(UintArrayLib.IndexOutOfBounds.selector);
-        array1.at(-10);
+        array1.at(-6);
     }
 
     function testPopulate() public {
@@ -86,6 +116,22 @@ contract ArrayUtilTest is Test {
         assertEq(sorted[2], 300);
         assertEq(sorted[3], 400);
         assertEq(sorted[4], 500);
+    }
+
+    function testSortInPlace() public {
+        uint256[] memory array = new uint256[](5);
+        array[0] = 400;
+        array[1] = 200;
+        array[2] = 100;
+        array[3] = 500;
+        array[4] = 300;
+
+        array.quickSort(); // this sort the array in place
+        assertEq(array[0], 100);
+        assertEq(array[1], 200);
+        assertEq(array[2], 300);
+        assertEq(array[3], 400);
+        assertEq(array[4], 500);
     }
 
     function testSortDups() public {
