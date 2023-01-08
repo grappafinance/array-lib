@@ -46,40 +46,41 @@ contract ArrayUtilTest is Test {
         assertEq(max, 5);
     }
 
-    function testConcat() public {
-        uint256[] memory array1 = new uint256[](0);
-        array1 = array1.append(1);
-        array1 = array1.append(2);
+    function testAppend() public {
+        uint256[] memory arr = _getDefaultArray();
+        arr = arr.append(1);
+        arr = arr.append(2);
 
-        assertEq(array1.length, 2);
-        assertEq(array1[0], 1);
-        assertEq(array1[1], 2);
-
-        uint256[] memory array2 = new uint256[](0);
-        array2 = array2.append(3);
-        array2 = array2.append(4);
-        array1 = array1.concat(array2);
-
-        assertEq(array1.length, 4);
-        assertEq(array1[0], 1);
-        assertEq(array1[1], 2);
-        assertEq(array1[2], 3);
-        assertEq(array1[3], 4);
-
-        array1 = new uint256[](0);
-        array1 = array1.append(1);
-        array2 = new uint256[](0);
-        array1 = array1.concat(array2);
-
-        assertEq(array1.length, 1);
-        assertEq(array1[0], 1);
+        assertEq(arr.length, 7);
+        assertEq(arr[5], 1);
+        assertEq(arr[6], 2);
     }
 
-    function testNegativeIndexSelector() public {
+    function testConcat() public {
+        uint256[] memory array1 = _getDefaultArray();
+        uint256[] memory array2 = _getDefaultArray();
+        
+        array1 = array1.concat(array2);
+
+        assertEq(array1.length, 10);
+        assertEq(array1[0], array1[5]);
+        assertEq(array1[1], array1[6]);
+        assertEq(array1[2], array1[7]);
+        assertEq(array1[3], array1[8]);
+        assertEq(array1[4], array1[9]);
+    }
+
+    function testIndexSelector() public {
         uint256[] memory array1 = _getDefaultArray();
 
-        uint256 element = array1.at(-1);
-        assertEq(element, 3);
+        // first 3 elements are 1, 5, 2
+        assertEq(array1.at(0), 1);
+        assertEq(array1.at(1), 5);
+        assertEq(array1.at(2), 2);
+
+        // last element is 3
+        assertEq(array1.at(-1), 3);
+        assertEq(array1.at(-2), 4);
 
         vm.expectRevert(UintArrayLib.IndexOutOfBounds.selector);
         array1.at(-6);
