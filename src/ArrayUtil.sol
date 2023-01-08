@@ -357,7 +357,7 @@ library ArrayUtil {
 
     /**
      * @dev quicksort implementation with indexes, sorts arr and indexArray in place
-     */ 
+     */
     function quickSort(int256[] memory arr, int256 left, int256 right, uint256[] memory indexArray) internal pure {
         if (left == right) return;
         int256 i = left;
