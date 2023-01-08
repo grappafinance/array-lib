@@ -59,7 +59,7 @@ contract ArrayUtilTest is Test {
     function testConcat() public {
         uint256[] memory array1 = _getDefaultArray();
         uint256[] memory array2 = _getDefaultArray();
-        
+
         array1 = array1.concat(array2);
 
         assertEq(array1.length, 10);
