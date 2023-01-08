@@ -343,6 +343,21 @@ library IntArrayLib {
     }
 
     /**
+     * @dev return an array y as the sum of 2 same-length array
+     *      y[i] = a[i] + b[i]
+     */
+    function add(int256[] memory a, int256[] memory b) internal pure returns (int256[] memory y) {
+        y = new int256[](a.length);
+        for (uint256 i; i < a.length;) {
+            y[i] = a[i] + b[i];
+
+            unchecked {
+                i++;
+            }
+        }
+    }
+
+    /**
      * @dev return an new array y with y[i] = x[i] + z
      */
     function addEachBy(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
@@ -366,21 +381,6 @@ library IntArrayLib {
 
             unchecked {
                 ++i;
-            }
-        }
-    }
-
-    /**
-     * @dev return an array y as the sum of 2 same-length array
-     *      y[i] = a[i] + b[i]
-     */
-    function add(int256[] memory a, int256[] memory b) internal pure returns (int256[] memory y) {
-        y = new int256[](a.length);
-        for (uint256 i; i < a.length;) {
-            y[i] = a[i] + b[i];
-
-            unchecked {
-                i++;
             }
         }
     }

@@ -81,6 +81,11 @@ contract IntArrayLibTester {
         return x;
     }
 
+    function slice(int256[] memory x, int256 l, int256 r) external pure returns (int256[] memory) {
+        int256[] memory y = IntArrayLib.slice(x, l, r);
+        return y;
+    }
+
     function sortByIndexes(int256[] memory x, uint256[] memory indexes) external pure returns (int256[] memory) {
         int256[] memory y = IntArrayLib.sortByIndexes(x, indexes);
         return y;
@@ -377,6 +382,48 @@ contract IntArrayLibCoverage is Test {
         tester.at(array1, -6);
         vm.expectRevert(stdError.indexOOBError);
         tester.at(array1, 5);
+    }
+
+    function testSlice() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory array = _getDefaultArray();
+
+        int256[] memory slice = tester.slice(array, 2, 4);
+        assertEq(slice.length, 2);
+        assertEq(slice[0], -2);
+        assertEq(slice[1], 4);
+
+        // ending = 0 is the same as ending = length
+        slice = tester.slice(array, 2, 0);
+        assertEq(slice.length, 3);
+        assertEq(slice[0], -2);
+        assertEq(slice[1], 4);
+        assertEq(slice[2], -3);
+
+        // ending = length
+        slice = tester.slice(array, 2, 5);
+        assertEq(slice.length, 3);
+        assertEq(slice[0], -2);
+        assertEq(slice[1], 4);
+        assertEq(slice[2], -3);
+    }
+
+    function testSliceNegativeIndex() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory array = _getDefaultArray();
+        int256[] memory slice = tester.slice(array, 1, -1);
+        assertEq(slice.length, 3);
+        assertEq(slice[0], 5);
+        assertEq(slice[1], -2);
+        assertEq(slice[2], 4);
+
+        slice = tester.slice(array, -3, -1);
+        assertEq(slice.length, 2);
+        assertEq(slice[0], -2);
+        assertEq(slice[1], 4);
+
+        slice = tester.slice(array, -1, -2);
+        assertEq(slice.length, 0);
     }
 
     function testSubEachBy() public {
