@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {Test, stdError} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 
 import {IntArrayLib} from "../IntArrayLib.sol";
 
 /**
- * Basic tests
+ * Basic tests for int array lib
  */
 contract IntArrayLibTest is Test {
-    // using UintArrayLib for uint256[];
     using IntArrayLib for int256[];
 
     function testSlice() public {
