@@ -76,6 +76,16 @@ contract IntArrayLibTester {
         return y;
     }
 
+    function fill(int256[] memory x, int256 v) external pure returns (int256[] memory) {
+        IntArrayLib.fill(x, v);
+        return x;
+    }
+
+    function sortByIndexes(int256[] memory x, uint256[] memory indexes) external pure returns (int256[] memory) {
+        int256[] memory y = IntArrayLib.sortByIndexes(x, indexes);
+        return y;
+    }
+
     function concat(int256[] memory a, int256[] memory b) external pure returns (int256[] memory) {
         int256[] memory y = IntArrayLib.concat(a, b);
         return y;
@@ -160,6 +170,16 @@ contract IntArrayLibCoverage is Test {
         assertEq(tester.min(arr), -3);
     }
 
+    function testMin2() public {
+        int256[] memory arr = new int256[](5);
+        arr[0] = 100;
+        arr[1] = 200;
+        arr[2] = type(int256).min;
+        arr[3] = 300;
+        arr[4] = type(int256).min;
+        assertEq(tester.min(arr), type(int256).min);
+    }
+
     function testMinWithIndex() public {
         int256[] memory arr = _getDefaultArray();
         (int256 min_, uint256 idx) = tester.minWithIndex(arr);
@@ -175,9 +195,15 @@ contract IntArrayLibCoverage is Test {
 
     function testRemove() public {
         int256[] memory arr = _getDefaultArray();
-        int256[] memory removed = tester.remove(arr, 0);
-        assertEq(removed[0], 5);
+        int256[] memory removed = tester.remove(arr, 1);
+        assertEq(removed[0], 1);
+        assertEq(removed[1], -2);
         assertEq(removed.length, 4);
+
+        // remove index 5: unchange
+        int256[] memory removed2 = tester.remove(arr, 5);
+        assertEq(removed2[4], -3);
+        assertEq(removed2.length, 5);
     }
 
     function testIndexOf() public {
@@ -207,6 +233,25 @@ contract IntArrayLibCoverage is Test {
         assertEq(indexes[2], 0);
         assertEq(indexes[3], 3);
         assertEq(indexes[4], 1);
+    }
+
+    function testSortByIndex() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory arr = _getDefaultArray();
+
+        uint256[] memory idxs = new uint256[](5);
+        idxs[0] = 1; // first element is arr[1] = 5
+        idxs[1] = 3; // second element is arr[3] = 4
+        idxs[2] = 0;
+        idxs[3] = 2;
+        idxs[4] = 4;
+
+        int256[] memory sorted = tester.sortByIndexes(arr, idxs);
+        assertEq(sorted[0], 5);
+        assertEq(sorted[1], 4);
+        assertEq(sorted[2], 1);
+        assertEq(sorted[3], -2);
+        assertEq(sorted[4], -3);
     }
 
     function testSort() public {
@@ -295,6 +340,14 @@ contract IntArrayLibCoverage is Test {
         assertEq(newArr[2], newArr[7]);
         assertEq(newArr[3], newArr[8]);
         assertEq(newArr[4], newArr[9]);
+    }
+
+    function testFill() public {
+        int256[] memory empty = new int256[](5);
+
+        int256[] memory newArr = tester.fill(empty, 77);
+        assertEq(newArr[0], 77);
+        assertEq(newArr[4], 77);
     }
 
     function testPopulate() public {
