@@ -121,26 +121,6 @@ contract IntArrayLibTester {
         return y;
     }
 
-    function eachMul(int256[] memory x, int256 z) external pure returns (int256[] memory) {
-        int256[] memory y = IntArrayLib.eachMul(x, z);
-        return y;
-    }
-
-    function eachDiv(int256[] memory x, int256 z) external pure returns (int256[] memory) {
-        int256[] memory y = IntArrayLib.eachDiv(x, z);
-        return y;
-    }
-
-    function eachMulDivUp(int256[] memory x, int256 z, int256 d) external pure returns (int256[] memory) {
-        int256[] memory y = IntArrayLib.eachMulDivUp(x, z, d);
-        return y;
-    }
-
-    function eachMulDivDown(int256[] memory x, int256 z, int256 d) external pure returns (int256[] memory) {
-        int256[] memory y = IntArrayLib.eachMulDivDown(x, z, d);
-        return y;
-    }
-
     function dot(int256[] memory a, int256[] memory b) external pure returns (int256) {
         int256 m = IntArrayLib.dot(a, b);
         return m;
@@ -495,54 +475,6 @@ contract IntArrayLibCoverage is Test {
         assertEq(result[2], -5);
         assertEq(result[3], 1);
         assertEq(result[4], -6);
-    }
-
-    function testEachMul() public {
-        // default [1, 5, -2, 4, -3]
-        int256[] memory arr = _getDefaultArray();
-        int256[] memory result = tester.eachMul(arr, -100);
-
-        assertEq(result[0], -100);
-        assertEq(result[1], -500);
-        assertEq(result[2], 200);
-        assertEq(result[3], -400);
-        assertEq(result[4], 300);
-    }
-
-    function testEachDiv() public {
-        // default [1e18, 5e18, -2e18, 4e18, -3e18]
-        int256[] memory arr = _getDefaultLarge();
-        int256[] memory result = tester.eachDiv(arr, 1e18);
-
-        assertEq(result[0], 1);
-        assertEq(result[1], 5);
-        assertEq(result[2], -2);
-        assertEq(result[3], 4);
-        assertEq(result[4], -3);
-    }
-
-    function testEachMulDivUp() public {
-        // default [1, 5, -2, 4, -3]
-        int256[] memory arr = _getDefaultArray();
-        int256[] memory result = tester.eachMulDivUp(arr, -1e20, -1e2);
-
-        assertEq(result[0], 1e18 + 1);
-        assertEq(result[1], 5e18 + 1);
-        assertEq(result[2], -2e18 + 1);
-        assertEq(result[3], 4e18 + 1);
-        assertEq(result[4], -3e18 + 1);
-    }
-
-    function testEachMulDivDown() public {
-        // default [1, 5, -2, 4, -3]
-        int256[] memory arr = _getDefaultArray();
-        int256[] memory result = tester.eachMulDivDown(arr, -1e20, 1e2);
-
-        assertEq(result[0], -1e18);
-        assertEq(result[1], -5e18);
-        assertEq(result[2], 2e18);
-        assertEq(result[3], -4e18);
-        assertEq(result[4], 3e18);
     }
 
     function testDot() public {
