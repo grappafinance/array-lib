@@ -57,6 +57,22 @@ library UintArrayLib {
     }
 
     /**
+     * @dev return a new array that append element v at the end of array x
+     */
+    function append(uint256[] memory x, uint256 v) internal pure returns (uint256[] memory y) {
+        y = new uint256[](x.length + 1);
+        uint256 i;
+        for (i; i < x.length;) {
+            y[i] = x[i];
+
+            unchecked {
+                ++i;
+            }
+        }
+        y[i] = v;
+    }
+
+    /**
      * @dev Return a new array that removes element at index z.
      * @return y new array
      */
@@ -197,22 +213,6 @@ library UintArrayLib {
     }
 
     /**
-     * @dev return a new array that append element v at the end of array x
-     */
-    function append(uint256[] memory x, uint256 v) internal pure returns (uint256[] memory y) {
-        y = new uint256[](x.length + 1);
-        uint256 i;
-        for (i; i < x.length;) {
-            y[i] = x[i];
-
-            unchecked {
-                ++i;
-            }
-        }
-        y[i] = v;
-    }
-
-    /**
      * @dev return a new array that's the result of concatting a and b
      */
     function concat(uint256[] memory a, uint256[] memory b) internal pure returns (uint256[] memory y) {
@@ -321,20 +321,6 @@ library UintArrayLib {
     function dot(uint256[] memory a, int256[] memory b) internal pure returns (int256 s) {
         for (uint256 i; i < a.length;) {
             s += int256(a[i]) * b[i];
-
-            unchecked {
-                ++i;
-            }
-        }
-    }
-
-    /**
-     * @dev converting array of variable types
-     */
-    function toInt256(uint256[] memory x) internal pure returns (int256[] memory y) {
-        y = new int256[](x.length);
-        for (uint256 i; i < x.length;) {
-            y[i] = x[i].toInt256();
 
             unchecked {
                 ++i;

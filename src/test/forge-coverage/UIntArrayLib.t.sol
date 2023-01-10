@@ -105,11 +105,6 @@ contract UintArrayLibTester {
         uint256 m = UintArrayLib.dot(a, b);
         return m;
     }
-
-    function toInt256(uint256[] memory x) external pure returns (int256[] memory) {
-        int256[] memory y = UintArrayLib.toInt256(x);
-        return y;
-    }
 }
 
 /**
@@ -372,15 +367,5 @@ contract UintArrayLibCoverage is Test {
 
         uint256 result = tester.dot(a, b);
         assertEq(result, 55); // 1 + 25 + 4 + 16 + 9
-    }
-
-    function testToInt256() public {
-        uint256[] memory arr = _getDefaultArray();
-        int256[] memory result = tester.toInt256(arr);
-        assertEq(result[0], 1);
-        assertEq(result[1], 5);
-        assertEq(result[2], 2);
-        assertEq(result[3], 4);
-        assertEq(result[4], 3);
     }
 }

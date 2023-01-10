@@ -383,64 +383,6 @@ library IntArrayLib {
     }
 
     /**
-     * @dev return new array y, y[i] = x[i] * z / d (round down)
-     */
-    function eachMulDivDown(int256[] memory x, int256 z, int256 d) internal pure returns (int256[] memory y) {
-        y = new int256[](x.length);
-        for (uint256 i; i < x.length;) {
-            // todo: remove duplicate d != 0 check
-            y[i] = (x[i] * z) / d;
-
-            unchecked {
-                ++i;
-            }
-        }
-    }
-
-    /**
-     * @dev return new array y, y[i] = x[i] * z / d (round up)
-     */
-    function eachMulDivUp(int256[] memory x, int256 z, int256 d) internal pure returns (int256[] memory y) {
-        y = new int256[](x.length);
-        for (uint256 i; i < x.length;) {
-            // todo: actually rounding instead of + 1
-            y[i] = ((x[i] * z) / d) + 1;
-
-            unchecked {
-                ++i;
-            }
-        }
-    }
-
-    /**
-     * @dev return new array y, y[i] = x[i] * z
-     */
-    function eachMul(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
-        y = new int256[](x.length);
-        for (uint256 i; i < x.length;) {
-            y[i] = x[i] * z;
-
-            unchecked {
-                ++i;
-            }
-        }
-    }
-
-    /**
-     * @dev return new array y, y[i] = x[i] / z
-     */
-    function eachDiv(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
-        y = new int256[](x.length);
-        for (uint256 i; i < x.length;) {
-            y[i] = x[i] / z;
-
-            unchecked {
-                ++i;
-            }
-        }
-    }
-
-    /**
      * @dev return dot of 2 vectors
      *      will revert if 2 vectors have different length
      */
