@@ -14,3 +14,29 @@
   <h5 align="center"> Lib for solidity arrays.</h5>
   
 </div>
+
+## Installation
+
+```shell
+
+forge install grappafinance/array-lib@v0.1.0 --no-commit
+
+```
+
+Add to `remapping.txt`
+```
+array-lib=lib/array-lib/src
+```
+
+## Usage
+
+```solidity
+
+import {UintArrayLib} from "array-lib/UintArrayLib.sol";
+
+using UintArrayLib for uint256[];
+
+function zeroSum(uint256[] memory arr) internal pure returns (bool) {
+  return arr.sum() == 0;
+}
+```
