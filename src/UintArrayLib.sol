@@ -6,8 +6,6 @@ import {SafeCast} from "openzeppelin/utils/math/SafeCast.sol";
 library UintArrayLib {
     using SafeCast for uint256;
 
-    error IndexOutOfBounds();
-
     /**
      * @dev Returns maximal element in array
      */
@@ -260,13 +258,12 @@ library UintArrayLib {
      * @param i can be positive or negative
      */
     function at(uint256[] memory x, int256 i) internal pure returns (uint256) {
-        int256 len = x.length.toInt256();
         if (i >= 0) {
+            // will revert with out of bound error if i is too large
             return x[uint256(i)];
         } else {
-            if (i < -len) revert IndexOutOfBounds();
-            // cast directly here because len + i must > 0
-            return x[uint256(len + i)];
+            // will revert with underflow error if i is too small
+            return x[x.length - uint256(-i)];
         }
     }
 

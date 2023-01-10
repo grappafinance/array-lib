@@ -322,7 +322,8 @@ contract UintArrayLibCoverage is Test {
         assertEq(tester.at(array1, -1), 3);
         assertEq(tester.at(array1, -2), 4);
 
-        vm.expectRevert(UintArrayLib.IndexOutOfBounds.selector);
+        // index underflow
+        vm.expectRevert(stdError.arithmeticError);
         tester.at(array1, -6);
         vm.expectRevert(stdError.indexOOBError);
         tester.at(array1, 5);

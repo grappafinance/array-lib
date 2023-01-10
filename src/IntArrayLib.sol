@@ -7,8 +7,6 @@ library IntArrayLib {
     using SafeCast for int256;
     using SafeCast for uint256;
 
-    error IndexOutOfBounds();
-
     /**
      * @dev returns min value of aray x
      */
@@ -303,13 +301,12 @@ library IntArrayLib {
      * @param i can be positive or negative
      */
     function at(int256[] memory x, int256 i) internal pure returns (int256) {
-        int256 len = int256(x.length);
         if (i >= 0) {
+            // will revert with out of bound error if i is too large
             return x[uint256(i)];
         } else {
-            if (i < -len) revert IndexOutOfBounds();
-            // cast directly here because len + i must > 0
-            return x[uint256(len + i)];
+            // will revert with underflow error if i is too small
+            return x[x.length - uint256(-i)];
         }
     }
 
