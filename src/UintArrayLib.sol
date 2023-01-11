@@ -43,7 +43,9 @@ library UintArrayLib {
      * @dev return the min and max for an array.
      */
     function minMax(uint256[] memory x) internal pure returns (uint256 min_, uint256 max_) {
-        if (x.length == 1) return (x[0], x[0]);
+        if (x.length == 1) {
+            return (x[0], x[0]);
+        }
         (min_, max_) = (x[0], x[0]);
 
         uint256 len = x.length;
@@ -64,14 +66,19 @@ library UintArrayLib {
      * @return y new array
      */
     function remove(uint256[] memory x, uint256 z) internal pure returns (uint256[] memory y) {
-        if (z >= x.length) return x;
+        if (z >= x.length) {
+            return x;
+        }
         y = new uint256[](x.length - 1);
 
         uint256 len = x.length;
         for (uint256 i; i < len;) {
             unchecked {
-                if (i < z) y[i] = x[i];
-                else if (i > z) y[i - 1] = x[i];
+                if (i < z) {
+                    y[i] = x[i];
+                } else if (i > z) {
+                    y[i - 1] = x[i];
+                }
                 ++i;
             }
         }
@@ -154,7 +161,9 @@ library UintArrayLib {
      * @dev sort arr[left:right] in place with quick sort algorithm
      */
     function quickSort(uint256[] memory arr, int256 left, int256 right) internal pure {
-        if (left == right) return;
+        if (left == right) {
+            return;
+        }
         int256 i = left;
         int256 j = right;
         unchecked {
@@ -173,15 +182,21 @@ library UintArrayLib {
                 }
             }
         }
-        if (left < j) quickSort(arr, left, j);
-        if (i < right) quickSort(arr, i, right);
+        if (left < j) {
+            quickSort(arr, left, j);
+        }
+        if (i < right) {
+            quickSort(arr, i, right);
+        }
     }
 
     /**
      * @dev quicksort implementation with indexes, sorts input arr and indexArray IN PLACE
      */
     function quickSort(uint256[] memory arr, int256 left, int256 right, uint256[] memory indexArray) internal pure {
-        if (left == right) return;
+        if (left == right) {
+            return;
+        }
         int256 i = left;
         int256 j = right;
         unchecked {
@@ -200,8 +215,12 @@ library UintArrayLib {
                     --j;
                 }
             }
-            if (left < j) quickSort(arr, left, j, indexArray);
-            if (i < right) quickSort(arr, i, right, indexArray);
+            if (left < j) {
+                quickSort(arr, left, j, indexArray);
+            }
+            if (i < right) {
+                quickSort(arr, i, right, indexArray);
+            }
         }
     }
 
@@ -266,8 +285,8 @@ library UintArrayLib {
 
     /**
      * @dev return the element at index i
-     *      if i is positive, it's the same as requesting x[i]
-     *      if i is negative, return the value positioned at -i from the end
+     * if i is positive, it's the same as requesting x[i]
+     * if i is negative, return the value positioned at -i from the end
      * @param i can be positive or negative
      */
     function at(uint256[] memory x, int256 i) internal pure returns (uint256) {
@@ -314,7 +333,7 @@ library UintArrayLib {
 
     /**
      * @dev return dot of 2 vectors
-     *      will revert if 2 vectors has different length
+     * will revert if 2 vectors has different length
      * @param a uint256 array
      * @param b uint256 array
      */
@@ -330,7 +349,7 @@ library UintArrayLib {
 
     /**
      * @dev return dot of 2 vectors
-     *      will revert if 2 vectors has different length
+     * will revert if 2 vectors has different length
      * @param a uint256 array
      * @param b int256 array
      */
@@ -356,6 +375,31 @@ library UintArrayLib {
 
             unchecked {
                 ++i;
+            }
+        }
+    }
+
+    /**
+     * @dev return a new array contains the copy from x[start] to x[end]
+     * if i is positive, it's the same as requesting x[i]
+     * if i is negative, return the value positioned at -i from the end
+     * @param x array to copy
+     * @param _start starting index, can be negative
+     * @param _start ending index, can be negative
+     */
+    function slice(uint256[] memory x, uint256 _start, uint256 _end) internal pure returns (uint256[] memory a) {
+        // add checks for _start,_end
+        if (_end < _start) {
+            return new uint256[](0);
+        }
+        a = new uint256[](_end - _start);
+        uint256 y;
+        for (uint256 i = _start; i < _end;) {
+            a[y] = x[i];
+
+            unchecked {
+                ++i;
+                ++y;
             }
         }
     }

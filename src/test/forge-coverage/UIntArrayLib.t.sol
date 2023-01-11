@@ -110,6 +110,11 @@ contract UintArrayLibTester {
         int256[] memory y = UintArrayLib.toInt256(x);
         return y;
     }
+
+    function slice(uint256[] memory x, uint256 l, uint256 r) external pure returns (uint256[] memory) {
+        uint256[] memory y = UintArrayLib.slice(x, l, r);
+        return y;
+    }
 }
 
 /**
@@ -382,5 +387,22 @@ contract UintArrayLibCoverage is Test {
         assertEq(result[2], 2);
         assertEq(result[3], 4);
         assertEq(result[4], 3);
+    }
+
+    function testSlice() public {
+        // default [1, 5, 2, 4, 3]
+        uint256[] memory array = _getDefaultArray();
+
+        uint256[] memory slice = tester.slice(array, 2, 4);
+        assertEq(slice.length, 2);
+        assertEq(slice[0], 2);
+        assertEq(slice[1], 4);
+
+        // ending = length
+        slice = tester.slice(array, 2, 5);
+        assertEq(slice.length, 3);
+        assertEq(slice[0], 2);
+        assertEq(slice[1], 4);
+        assertEq(slice[2], 3);
     }
 }

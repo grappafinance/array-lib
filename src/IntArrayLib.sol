@@ -62,8 +62,11 @@ library IntArrayLib {
     function maximum(int256[] memory x, int256 z) internal pure returns (int256[] memory y) {
         y = new int256[](x.length);
         for (uint256 i; i < x.length;) {
-            if (x[i] > z) y[i] = x[i];
-            else y[i] = z;
+            if (x[i] > z) {
+                y[i] = x[i];
+            } else {
+                y[i] = z;
+            }
 
             unchecked {
                 ++i;
@@ -76,12 +79,17 @@ library IntArrayLib {
      * @return y new array
      */
     function remove(int256[] memory x, uint256 z) internal pure returns (int256[] memory y) {
-        if (z >= x.length) return x;
+        if (z >= x.length) {
+            return x;
+        }
         y = new int256[](x.length - 1);
         for (uint256 i; i < x.length;) {
             unchecked {
-                if (i < z) y[i] = x[i];
-                else if (i > z) y[i - 1] = x[i];
+                if (i < z) {
+                    y[i] = x[i];
+                } else if (i > z) {
+                    y[i - 1] = x[i];
+                }
                 ++i;
             }
         }
@@ -159,7 +167,9 @@ library IntArrayLib {
      * @dev sort arr[left:right] in place with quick sort algorithm
      */
     function quickSort(int256[] memory arr, int256 left, int256 right) internal pure {
-        if (left == right) return;
+        if (left == right) {
+            return;
+        }
         int256 i = left;
         int256 j = right;
         unchecked {
@@ -179,15 +189,21 @@ library IntArrayLib {
                 }
             }
         }
-        if (left < j) quickSort(arr, left, j);
-        if (i < right) quickSort(arr, i, right);
+        if (left < j) {
+            quickSort(arr, left, j);
+        }
+        if (i < right) {
+            quickSort(arr, i, right);
+        }
     }
 
     /**
      * @dev quicksort implementation with indexes, sorts arr and indexArray in place
      */
     function quickSort(int256[] memory arr, int256 left, int256 right, uint256[] memory indexArray) internal pure {
-        if (left == right) return;
+        if (left == right) {
+            return;
+        }
         int256 i = left;
         int256 j = right;
         unchecked {
@@ -207,8 +223,12 @@ library IntArrayLib {
                 }
             }
         }
-        if (left < j) quickSort(arr, left, j, indexArray);
-        if (i < right) quickSort(arr, i, right, indexArray);
+        if (left < j) {
+            quickSort(arr, left, j, indexArray);
+        }
+        if (i < right) {
+            quickSort(arr, i, right, indexArray);
+        }
     }
 
     /**
@@ -296,8 +316,8 @@ library IntArrayLib {
 
     /**
      * @dev return the element at index i
-     *      if i is positive, it's the same as requesting x[i]
-     *      if i is negative, return the value positioned at -i from the end
+     * if i is positive, it's the same as requesting x[i]
+     * if i is negative, return the value positioned at -i from the end
      * @param i can be positive or negative
      */
     function at(int256[] memory x, int256 i) internal pure returns (int256) {
@@ -312,20 +332,26 @@ library IntArrayLib {
 
     /**
      * @dev return a new array contains the copy from x[start] to x[end]
-     *      if i is positive, it's the same as requesting x[i]
-     *      if i is negative, return the value positioned at -i from the end
+     * if i is positive, it's the same as requesting x[i]
+     * if i is negative, return the value positioned at -i from the end
      * @param x array to copy
      * @param _start starting index, can be negative
      * @param _start ending index, can be negative
      */
     function slice(int256[] memory x, int256 _start, int256 _end) internal pure returns (int256[] memory a) {
         int256 len = int256(x.length);
-        if (_start < 0) _start = len + _start;
-        if (_end <= 0) _end = len + _end;
-        if (_end < _start) return new int256[](0);
+        if (_start < 0) {
+            _start = len + _start;
+        }
+        if (_end <= 0) {
+            _end = len + _end;
+        }
+        if (_end < _start) {
+            return new int256[](0);
+        }
 
-        uint256 start = _start.toUint256();
-        uint256 end = _end.toUint256();
+        uint256 start = uint256(_start);
+        uint256 end = uint256(_end);
 
         a = new int256[](end - start);
         uint256 y;
@@ -341,7 +367,7 @@ library IntArrayLib {
 
     /**
      * @dev return an array y as the sum of 2 same-length array
-     *      y[i] = a[i] + b[i]
+     * y[i] = a[i] + b[i]
      */
     function add(int256[] memory a, int256[] memory b) internal pure returns (int256[] memory y) {
         y = new int256[](a.length);
@@ -442,7 +468,7 @@ library IntArrayLib {
 
     /**
      * @dev return dot of 2 vectors
-     *      will revert if 2 vectors have different length
+     * will revert if 2 vectors have different length
      */
     function dot(int256[] memory a, int256[] memory b) internal pure returns (int256 s) {
         for (uint256 i; i < a.length;) {
