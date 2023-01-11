@@ -324,8 +324,8 @@ library IntArrayLib {
         if (_end <= 0) _end = len + _end;
         if (_end < _start) return new int256[](0);
 
-        uint256 start = _start.toUint256();
-        uint256 end = _end.toUint256();
+        uint256 start = uint256(_start);
+        uint256 end = uint256(_end);
 
         a = new int256[](end - start);
         uint256 y;
