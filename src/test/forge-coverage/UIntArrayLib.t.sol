@@ -163,7 +163,6 @@ contract UintArrayLibCoverage is Test {
         assertEq(indexOf3, 4);
     }
 
-    
     function testAppend() public {
         uint256[] memory arr = _getDefaultArray();
         arr = tester.append(arr, 1);

@@ -8,9 +8,11 @@ import "../UintArrayLib.sol";
  * @author dsshap
  */
 library QuickSort {
-    /** ----------------------- **
-     |  Quick Sort For Int256[]  |
-     ** ----------------------- **/
+    /**
+     * ----------------------- **
+     *  |  Quick Sort For Int256[]  |
+     * ----------------------- *
+     */
 
     /**
      * @dev get a new sorted array and index order used to sort.
@@ -105,9 +107,11 @@ library QuickSort {
         if (i < right) quickSort(arr, i, right, indexArray);
     }
 
-    /** ----------------------- **
-     |  Quick Sort For Uint256[] |
-     ** ----------------------- **/
+    /**
+     * ----------------------- **
+     *  |  Quick Sort For Uint256[] |
+     * ----------------------- *
+     */
 
     /**
      * @dev get a new sorted array and index order used to sort.

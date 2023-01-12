@@ -6,7 +6,6 @@ import {Test, stdError} from "forge-std/Test.sol";
 import {QuickSort} from "src/sorting/QuickSort.sol";
 
 contract QuickSortTester {
-
     // Int Array Sorting
 
     function argSort(int256[] memory x) external pure returns (int256[] memory, uint256[] memory) {
@@ -33,7 +32,8 @@ contract QuickSortTester {
     function quickSort(int256[] memory x, int256 left, int256 right, uint256[] memory indexArray)
         external
         pure
-        returns (int256[] memory, uint256[] memory) {
+        returns (int256[] memory, uint256[] memory)
+    {
         QuickSort.quickSort(x, left, right, indexArray);
         return (x, indexArray);
     }
@@ -69,7 +69,6 @@ contract QuickSortTester {
         QuickSort.quickSort(x, left, right, indexArray);
         return (x, indexArray);
     }
-
 }
 
 /**
@@ -280,5 +279,4 @@ contract QuickSortLibCoverage is Test {
         assertEq(idxs[3], 4); // swapped
         assertEq(idxs[4], 3); // swapped
     }
-
 }
