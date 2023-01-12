@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {Test, stdError} from "forge-std/Test.sol";
 
-import {IntArrayLib} from "../../IntArrayLib.sol";
+import {IntArrayLib} from "src/IntArrayLib.sol";
 
 contract IntArrayLibTester {
     function max(int256[] memory x) external pure returns (int256) {
@@ -207,107 +207,6 @@ contract IntArrayLibCoverage is Test {
         assertEq(found3, true);
         assertEq(indexOf3, 4);
     }
-
-    // function testArgSort() public {
-    //     // default [1, 5, -2, 4, -3]
-    //     int256[] memory arr = _getDefaultArray();
-    //     (int256[] memory sorted, uint256[] memory indexes) = tester.argSort(arr);
-    //     assertEq(sorted[0], -3);
-    //     assertEq(sorted[1], -2);
-    //     assertEq(sorted[2], 1);
-    //     assertEq(sorted[3], 4);
-    //     assertEq(sorted[4], 5);
-
-    //     assertEq(indexes[0], 4); // index of v = -3
-    //     assertEq(indexes[1], 2); // index of v = -2
-    //     assertEq(indexes[2], 0);
-    //     assertEq(indexes[3], 3);
-    //     assertEq(indexes[4], 1);
-    // }
-
-    // function testSortByIndex() public {
-    //     // default [1, 5, -2, 4, -3]
-    //     int256[] memory arr = _getDefaultArray();
-
-    //     uint256[] memory idxs = new uint256[](5);
-    //     idxs[0] = 1; // first element is arr[1] = 5
-    //     idxs[1] = 3; // second element is arr[3] = 4
-    //     idxs[2] = 0;
-    //     idxs[3] = 2;
-    //     idxs[4] = 4;
-
-    //     int256[] memory sorted = tester.sortByIndexes(arr, idxs);
-    //     assertEq(sorted[0], 5);
-    //     assertEq(sorted[1], 4);
-    //     assertEq(sorted[2], 1);
-    //     assertEq(sorted[3], -2);
-    //     assertEq(sorted[4], -3);
-    // }
-
-    // function testSort() public {
-    //     int256[] memory arr = _getDefaultArray();
-    //     arr = tester.sort(arr);
-
-    //     assertEq(arr[0], -3);
-    //     assertEq(arr[1], -2);
-    //     assertEq(arr[2], 1);
-    //     assertEq(arr[3], 4);
-    //     assertEq(arr[4], 5);
-    // }
-
-    // function testQuickSort() public {
-    //     // default [1, 5, -2, 4, -3]
-    //     int256[] memory arr = _getDefaultArray();
-    //     arr = tester.quickSort(arr);
-
-    //     assertEq(arr[0], -3);
-    //     assertEq(arr[1], -2);
-    //     assertEq(arr[2], 1);
-    //     assertEq(arr[3], 4);
-    //     assertEq(arr[4], 5);
-    // }
-
-    // function testQuickSortPart1() public {
-    //     // default [1, 5, -2, 4, -3]
-    //     int256[] memory arr = _getDefaultArray();
-    //     arr = tester.quickSort(arr, 2, 4); // only sort arr[2:5]
-
-    //     assertEq(arr[0], 1); // untouched
-    //     assertEq(arr[1], 5); // untouched
-    //     assertEq(arr[2], -3);
-    //     assertEq(arr[3], -2);
-    //     assertEq(arr[4], 4);
-    // }
-
-    // function testQuickSortPart2() public {
-    //     int256[] memory arr = _getDefaultArray();
-    //     arr = tester.quickSort(arr, 0, 2); // only sort arr[2:5]
-
-    //     assertEq(arr[0], -2);
-    //     assertEq(arr[1], 1);
-    //     assertEq(arr[2], 5);
-    //     assertEq(arr[3], 4); // untouched
-    //     assertEq(arr[4], -3); // untouched
-    // }
-
-    // function testQuickSortWithIdxs() public {
-    //     // default [1, 5, -2, 4, -3]
-    //     int256[] memory arr = _getDefaultArray();
-    //     uint256[] memory idxs = _getDefaultIndexArr();
-    //     (arr, idxs) = tester.quickSort(arr, 2, 4, idxs); // only sort arr[2:5]
-
-    //     assertEq(arr[0], 1); // untouched
-    //     assertEq(arr[1], 5); // untouched
-    //     assertEq(arr[2], -3);
-    //     assertEq(arr[3], -2);
-    //     assertEq(arr[4], 4);
-
-    //     assertEq(idxs[0], 0); // untouched
-    //     assertEq(idxs[1], 1); // untouched
-    //     assertEq(idxs[2], 4);
-    //     assertEq(idxs[3], 2);
-    //     assertEq(idxs[4], 3);
-    // }
 
     function testAppend() public {
         int256[] memory arr = _getDefaultArray();

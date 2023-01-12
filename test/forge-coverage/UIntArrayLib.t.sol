@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {Test, stdError} from "forge-std/Test.sol";
 
-import {UintArrayLib} from "../../UintArrayLib.sol";
+import {UintArrayLib} from "src/UintArrayLib.sol";
 
 contract UintArrayLibTester {
     function max(uint256[] memory x) external pure returns (uint256) {

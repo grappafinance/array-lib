@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {Test} from "forge-std/Test.sol";
 
-import {IntArrayLib} from "../../IntArrayLib.sol";
+import {IntArrayLib} from "src/IntArrayLib.sol";
 
 /**
  * Basic tests for int array lib
