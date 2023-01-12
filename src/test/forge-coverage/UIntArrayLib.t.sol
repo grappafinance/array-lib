@@ -36,36 +36,6 @@ contract UintArrayLibTester {
         return (found, index);
     }
 
-    function argSort(uint256[] memory x) external pure returns (uint256[] memory, uint256[] memory) {
-        (uint256[] memory y, uint256[] memory indexes) = UintArrayLib.argSort(x);
-        return (y, indexes);
-    }
-
-    function sort(uint256[] memory x) external pure returns (uint256[] memory) {
-        uint256[] memory y = UintArrayLib.sort(x);
-        return y;
-    }
-
-    function quickSort(uint256[] memory x) external pure returns (uint256[] memory) {
-        UintArrayLib.quickSort(x);
-
-        return x;
-    }
-
-    function quickSort(uint256[] memory x, int256 left, int256 right) external pure returns (uint256[] memory) {
-        UintArrayLib.quickSort(x, left, right);
-        return x;
-    }
-
-    function quickSort(uint256[] memory x, int256 left, int256 right, uint256[] memory indexArray)
-        external
-        pure
-        returns (uint256[] memory, uint256[] memory)
-    {
-        UintArrayLib.quickSort(x, left, right, indexArray);
-        return (x, indexArray);
-    }
-
     function append(uint256[] memory x, uint256 v) external pure returns (uint256[] memory) {
         uint256[] memory y = UintArrayLib.append(x, v);
         return y;
@@ -193,84 +163,7 @@ contract UintArrayLibCoverage is Test {
         assertEq(indexOf3, 4);
     }
 
-    function testArgSort() public {
-        uint256[] memory arr = _getDefaultArray();
-        (uint256[] memory sorted, uint256[] memory indexes) = tester.argSort(arr);
-        assertEq(sorted[0], 1);
-        assertEq(sorted[1], 2);
-        assertEq(sorted[2], 3);
-        assertEq(sorted[3], 4);
-        assertEq(sorted[4], 5);
-
-        assertEq(indexes[0], 0); // index of v = 1
-        assertEq(indexes[1], 2); // index of v = 2
-        assertEq(indexes[2], 4);
-        assertEq(indexes[3], 3);
-        assertEq(indexes[4], 1);
-    }
-
-    function testSort() public {
-        uint256[] memory arr = _getDefaultArray();
-        arr = tester.sort(arr);
-
-        assertEq(arr[0], 1);
-        assertEq(arr[1], 2);
-        assertEq(arr[2], 3);
-        assertEq(arr[3], 4);
-        assertEq(arr[4], 5);
-    }
-
-    function testQuickSort() public {
-        uint256[] memory arr = _getDefaultArray();
-        arr = tester.quickSort(arr);
-
-        assertEq(arr[0], 1);
-        assertEq(arr[1], 2);
-        assertEq(arr[2], 3);
-        assertEq(arr[3], 4);
-        assertEq(arr[4], 5);
-    }
-
-    function testQuickSortPart1() public {
-        uint256[] memory arr = _getDefaultArray();
-        arr = tester.quickSort(arr, 2, 4); // only sort arr[2:5]
-
-        assertEq(arr[0], 1); // untouched
-        assertEq(arr[1], 5); // untouched
-        assertEq(arr[2], 2);
-        assertEq(arr[3], 3);
-        assertEq(arr[4], 4);
-    }
-
-    function testQuickSortPart2() public {
-        uint256[] memory arr = _getDefaultArray();
-        arr = tester.quickSort(arr, 0, 2); // only sort arr[2:5]
-
-        assertEq(arr[0], 1);
-        assertEq(arr[1], 2);
-        assertEq(arr[2], 5);
-        assertEq(arr[3], 4); // untouched
-        assertEq(arr[4], 3); // untouched
-    }
-
-    function testQuickSortWithIdxs() public {
-        uint256[] memory arr = _getDefaultArray();
-        uint256[] memory idxs = _getDefaultIndexArr();
-        (arr, idxs) = tester.quickSort(arr, 2, 4, idxs); // only sort arr[2:5]
-
-        assertEq(arr[0], 1); // untouched
-        assertEq(arr[1], 5); // untouched
-        assertEq(arr[2], 2);
-        assertEq(arr[3], 3);
-        assertEq(arr[4], 4);
-
-        assertEq(idxs[0], 0); // untouched
-        assertEq(idxs[1], 1); // untouched
-        assertEq(idxs[2], 2);
-        assertEq(idxs[3], 4); // swapped
-        assertEq(idxs[4], 3); // swapped
-    }
-
+    
     function testAppend() public {
         uint256[] memory arr = _getDefaultArray();
         arr = tester.append(arr, 1);

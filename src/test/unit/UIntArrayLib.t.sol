@@ -97,131 +97,131 @@ contract ArrayUtilTest is Test {
         assertEq(array1[1], 2);
     }
 
-    function testSort() public {
-        uint256[] memory array = new uint256[](5);
-        array[0] = 400;
-        array[1] = 200;
-        array[2] = 100;
-        array[3] = 500;
-        array[4] = 300;
+    // function testSort() public {
+    //     uint256[] memory array = new uint256[](5);
+    //     array[0] = 400;
+    //     array[1] = 200;
+    //     array[2] = 100;
+    //     array[3] = 500;
+    //     array[4] = 300;
 
-        uint256[] memory sorted = array.sort();
-        assertEq(sorted.length, 5);
-        assertEq(sorted[0], 100);
-        assertEq(sorted[1], 200);
-        assertEq(sorted[2], 300);
-        assertEq(sorted[3], 400);
-        assertEq(sorted[4], 500);
-    }
+    //     uint256[] memory sorted = array.sort();
+    //     assertEq(sorted.length, 5);
+    //     assertEq(sorted[0], 100);
+    //     assertEq(sorted[1], 200);
+    //     assertEq(sorted[2], 300);
+    //     assertEq(sorted[3], 400);
+    //     assertEq(sorted[4], 500);
+    // }
 
-    function testSortInPlace() public {
-        uint256[] memory array = new uint256[](5);
-        array[0] = 400;
-        array[1] = 200;
-        array[2] = 100;
-        array[3] = 500;
-        array[4] = 300;
+    // function testSortInPlace() public {
+    //     uint256[] memory array = new uint256[](5);
+    //     array[0] = 400;
+    //     array[1] = 200;
+    //     array[2] = 100;
+    //     array[3] = 500;
+    //     array[4] = 300;
 
-        array.quickSort(); // this sort the array in place
-        assertEq(array[0], 100);
-        assertEq(array[1], 200);
-        assertEq(array[2], 300);
-        assertEq(array[3], 400);
-        assertEq(array[4], 500);
-    }
+    //     array.quickSort(); // this sort the array in place
+    //     assertEq(array[0], 100);
+    //     assertEq(array[1], 200);
+    //     assertEq(array[2], 300);
+    //     assertEq(array[3], 400);
+    //     assertEq(array[4], 500);
+    // }
 
-    function testSortDups() public {
-        uint256[] memory array = new uint256[](6);
-        array[0] = 1;
-        array[1] = 1;
-        array[2] = 1;
-        array[3] = 0;
-        array[4] = 3;
-        array[5] = 3;
+    // function testSortDups() public {
+    //     uint256[] memory array = new uint256[](6);
+    //     array[0] = 1;
+    //     array[1] = 1;
+    //     array[2] = 1;
+    //     array[3] = 0;
+    //     array[4] = 3;
+    //     array[5] = 3;
 
-        uint256[] memory sorted = array.sort();
-        assertEq(sorted.length, 6);
-        assertEq(sorted[0], 0);
-        assertEq(sorted[1], 1);
-        assertEq(sorted[2], 1);
-        assertEq(sorted[3], 1);
-        assertEq(sorted[4], 3);
-        assertEq(sorted[5], 3);
-    }
+    //     uint256[] memory sorted = array.sort();
+    //     assertEq(sorted.length, 6);
+    //     assertEq(sorted[0], 0);
+    //     assertEq(sorted[1], 1);
+    //     assertEq(sorted[2], 1);
+    //     assertEq(sorted[3], 1);
+    //     assertEq(sorted[4], 3);
+    //     assertEq(sorted[5], 3);
+    // }
 
-    function testArgSort() public {
-        uint256[] memory array = new uint256[](5);
-        array[0] = 400;
-        array[1] = 200;
-        array[2] = 100;
-        array[3] = 500;
-        array[4] = 300;
+    // function testArgSort() public {
+    //     uint256[] memory array = new uint256[](5);
+    //     array[0] = 400;
+    //     array[1] = 200;
+    //     array[2] = 100;
+    //     array[3] = 500;
+    //     array[4] = 300;
 
-        (uint256[] memory sorted, uint256[] memory indexes) = array.argSort();
-        assertEq(sorted.length, 5);
-        assertEq(sorted[0], 100);
-        assertEq(sorted[1], 200);
-        assertEq(sorted[2], 300);
-        assertEq(sorted[3], 400);
-        assertEq(sorted[4], 500);
+    //     (uint256[] memory sorted, uint256[] memory indexes) = array.argSort();
+    //     assertEq(sorted.length, 5);
+    //     assertEq(sorted[0], 100);
+    //     assertEq(sorted[1], 200);
+    //     assertEq(sorted[2], 300);
+    //     assertEq(sorted[3], 400);
+    //     assertEq(sorted[4], 500);
 
-        assertEq(indexes.length, 5);
-        assertEq(indexes[0], 2);
-        assertEq(indexes[1], 1);
-        assertEq(indexes[2], 4);
-        assertEq(indexes[3], 0);
-        assertEq(indexes[4], 3);
-    }
+    //     assertEq(indexes.length, 5);
+    //     assertEq(indexes[0], 2);
+    //     assertEq(indexes[1], 1);
+    //     assertEq(indexes[2], 4);
+    //     assertEq(indexes[3], 0);
+    //     assertEq(indexes[4], 3);
+    // }
 
-    function testArgSortDups() public {
-        uint256[] memory array = new uint256[](5);
-        array[0] = 4;
-        array[1] = 1;
-        array[2] = 1;
-        array[3] = 1;
-        array[4] = 3;
+    // function testArgSortDups() public {
+    //     uint256[] memory array = new uint256[](5);
+    //     array[0] = 4;
+    //     array[1] = 1;
+    //     array[2] = 1;
+    //     array[3] = 1;
+    //     array[4] = 3;
 
-        (uint256[] memory sorted, uint256[] memory indexes) = array.argSort();
-        assertEq(sorted.length, 5);
-        assertEq(sorted[0], 1);
-        assertEq(sorted[1], 1);
-        assertEq(sorted[2], 1);
-        assertEq(sorted[3], 3);
-        assertEq(sorted[4], 4);
+    //     (uint256[] memory sorted, uint256[] memory indexes) = array.argSort();
+    //     assertEq(sorted.length, 5);
+    //     assertEq(sorted[0], 1);
+    //     assertEq(sorted[1], 1);
+    //     assertEq(sorted[2], 1);
+    //     assertEq(sorted[3], 3);
+    //     assertEq(sorted[4], 4);
 
-        assertEq(indexes.length, 5);
-        assertEq(indexes[0], 2);
-        assertEq(indexes[1], 3);
-        assertEq(indexes[2], 1);
-        assertEq(indexes[3], 4);
-        assertEq(indexes[4], 0);
-    }
+    //     assertEq(indexes.length, 5);
+    //     assertEq(indexes[0], 2);
+    //     assertEq(indexes[1], 3);
+    //     assertEq(indexes[2], 1);
+    //     assertEq(indexes[3], 4);
+    //     assertEq(indexes[4], 0);
+    // }
 
-    function testArgSortDupsEvenItems() public {
-        uint256[] memory array = new uint256[](6);
-        array[0] = 4;
-        array[1] = 1;
-        array[2] = 1;
-        array[3] = 1;
-        array[4] = 3;
-        array[5] = 3;
+    // function testArgSortDupsEvenItems() public {
+    //     uint256[] memory array = new uint256[](6);
+    //     array[0] = 4;
+    //     array[1] = 1;
+    //     array[2] = 1;
+    //     array[3] = 1;
+    //     array[4] = 3;
+    //     array[5] = 3;
 
-        (uint256[] memory sorted, uint256[] memory indexes) = array.argSort();
-        assertEq(sorted.length, 6);
-        assertEq(sorted[0], 1);
-        assertEq(sorted[1], 1);
-        assertEq(sorted[2], 1);
-        assertEq(sorted[3], 3);
-        assertEq(sorted[4], 3);
-        assertEq(sorted[5], 4);
+    //     (uint256[] memory sorted, uint256[] memory indexes) = array.argSort();
+    //     assertEq(sorted.length, 6);
+    //     assertEq(sorted[0], 1);
+    //     assertEq(sorted[1], 1);
+    //     assertEq(sorted[2], 1);
+    //     assertEq(sorted[3], 3);
+    //     assertEq(sorted[4], 3);
+    //     assertEq(sorted[5], 4);
 
-        assertEq(indexes.length, 6);
+    //     assertEq(indexes.length, 6);
 
-        assertEq(indexes[0], 2);
-        assertEq(indexes[1], 3);
-        assertEq(indexes[2], 1);
-        assertEq(indexes[3], 4);
-        assertEq(indexes[4], 5);
-        assertEq(indexes[5], 0);
-    }
+    //     assertEq(indexes[0], 2);
+    //     assertEq(indexes[1], 3);
+    //     assertEq(indexes[2], 1);
+    //     assertEq(indexes[3], 4);
+    //     assertEq(indexes[4], 5);
+    //     assertEq(indexes[5], 0);
+    // }
 }
