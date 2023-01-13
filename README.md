@@ -30,6 +30,8 @@ array-lib=lib/array-lib/src
 
 ## Usage
 
+### Array Utils
+
 ```solidity
 
 import {UintArrayLib} from "array-lib/UintArrayLib.sol";
@@ -38,5 +40,26 @@ using UintArrayLib for uint256[];
 
 function zeroSum(uint256[] memory arr) internal pure returns (bool) {
   return arr.sum() == 0;
+}
+```
+
+### Sorting
+
+```solidity
+
+import {QuickSort} from "array-lib/sorting/QuickSort.sol";
+
+using QuickSort for uint256[];
+
+function calculateSomethingHard() internal pure returns (bool) {
+  uint256[] memory arr = _getArr();
+
+  // get a new sorting array
+  uint256[] sorted = arr.getSorted();
+
+  // sort in memory
+  arr.quickSort();
+
+  
 }
 ```

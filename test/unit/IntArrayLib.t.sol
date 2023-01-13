@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {Test} from "forge-std/Test.sol";
 
-import {IntArrayLib} from "../../IntArrayLib.sol";
+import {IntArrayLib} from "src/IntArrayLib.sol";
 
 /**
  * Basic tests for int array lib
@@ -43,32 +43,6 @@ contract IntArrayLibTest is Test {
 
         slice = array.slice(-1, -2);
         assertEq(slice.length, 0);
-    }
-
-    function testArgSortDupsInt() public {
-        /// this implicitly tests sort and sort dups too
-        int256[] memory array = new int256[](5);
-        array[0] = 4;
-        array[1] = -1;
-        array[2] = -1;
-        array[3] = -1;
-        array[4] = 3;
-
-        (int256[] memory sorted, uint256[] memory indexes) = array.argSort();
-        assertEq(sorted.length, 5);
-        assertEq(sorted[0], -1);
-        assertEq(sorted[1], -1);
-        assertEq(sorted[2], -1);
-        assertEq(sorted[3], 3);
-        assertEq(sorted[4], 4);
-
-        assertEq(indexes.length, 5);
-
-        assertEq(indexes[0], 2);
-        assertEq(indexes[1], 3);
-        assertEq(indexes[2], 1);
-        assertEq(indexes[3], 4);
-        assertEq(indexes[4], 0);
     }
 
     function testSortByIndexes() public {
