@@ -52,6 +52,13 @@ contract BubbleSortLibCoverage is Test {
         return arr;
     }
 
+    function testSortIntLength0() public {
+        int256[] memory arr = new int256[](1);
+        arr[0] = 50;
+        arr = tester.sort(arr);
+        assertEq(arr[0], 50);
+    }
+
     function testSortInt() public {
         int256[] memory arr = _getDefaultIntArray();
         arr = tester.sort(arr);
@@ -63,7 +70,14 @@ contract BubbleSortLibCoverage is Test {
         assertEq(arr[4], 5);
     }
 
-    function testBubbleSortUint() public {
+    function testSortUintLength0() public {
+        uint256[] memory arr = new uint256[](1);
+        arr[0] = 50;
+        arr = tester.sort(arr);
+        assertEq(arr[0], 50);
+    }
+
+    function testSortUint() public {
         uint256[] memory arr = _getDefaultUintArray();
         arr = tester.sort(arr);
 
