@@ -121,7 +121,7 @@ library UintArrayLib {
             let end := add(add(x,0x20),shl(5,mload(x)))
 
             // iszero(eq()) is cheaper than lt(i,n)
-            for{ let i:= add(x,0x20)} iszero(eq(i,n)) {i:=add(i,0x20)}{
+            for{ let i:= add(x,0x20)} iszero(eq(i,end)) {i:=add(i,0x20)}{
                 s := add(s,mload(i))
             }
         }
