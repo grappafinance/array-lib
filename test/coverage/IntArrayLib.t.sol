@@ -369,4 +369,23 @@ contract IntArrayLibCoverage is Test {
         int256 result = tester.dot(a, b);
         assertEq(result, 55); // 1 + 25 + 4 + 16 + 9
     }
+
+    function testSortByIndex() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory arr = _getDefaultArray();
+
+        uint256[] memory idxs = new uint256[](5);
+        idxs[0] = 1; // first element is arr[1] = 5
+        idxs[1] = 3; // second element is arr[3] = 4
+        idxs[2] = 0;
+        idxs[3] = 2;
+        idxs[4] = 4;
+
+        int256[] memory sorted = tester.sortByIndexes(arr, idxs);
+        assertEq(sorted[0], 5);
+        assertEq(sorted[1], 4);
+        assertEq(sorted[2], 1);
+        assertEq(sorted[3], -2);
+        assertEq(sorted[4], -3);
+    }
 }

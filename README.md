@@ -58,7 +58,7 @@ function calculateSomethingHard() internal pure returns (bool) {
   uint256[] sorted = arr.getSorted();
 
   // sort in memory
-  arr.quickSort();
+  arr.sort();
 
   
 }
