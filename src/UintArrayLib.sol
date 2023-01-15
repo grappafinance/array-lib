@@ -111,7 +111,7 @@ library UintArrayLib {
      * @return s sum
      */
     function sum(uint256[] memory x) internal pure returns (uint256 s) {
-        require(x.length !=0,"EMPTY_ARRAY")
+        require(x.length !=0,"EMPTY_ARRAY");
         assembly {
             // Memory layout of input array
             // Consequent slots of 32 bytes each
