@@ -18,8 +18,8 @@ contract QuickSortTester {
         return y;
     }
 
-    function quickSort(int256[] memory x) external pure returns (int256[] memory) {
-        QuickSort.quickSort(x);
+    function sort(int256[] memory x) external pure returns (int256[] memory) {
+        QuickSort.sort(x);
 
         return x;
     }
@@ -50,8 +50,8 @@ contract QuickSortTester {
         return y;
     }
 
-    function quickSort(uint256[] memory x) external pure returns (uint256[] memory) {
-        QuickSort.quickSort(x);
+    function sort(uint256[] memory x) external pure returns (uint256[] memory) {
+        QuickSort.sort(x);
 
         return x;
     }
@@ -149,7 +149,7 @@ contract QuickSortLibCoverage is Test {
     function testQuickSortInt() public {
         // default [1, 5, -2, 4, -3]
         int256[] memory arr = _getDefaultIntArray();
-        arr = tester.quickSort(arr);
+        arr = tester.sort(arr);
 
         assertEq(arr[0], -3);
         assertEq(arr[1], -2);
@@ -231,7 +231,7 @@ contract QuickSortLibCoverage is Test {
 
     function testQuickSortUint() public {
         uint256[] memory arr = _getDefaultUintArray();
-        arr = tester.quickSort(arr);
+        arr = tester.sort(arr);
 
         assertEq(arr[0], 1);
         assertEq(arr[1], 2);

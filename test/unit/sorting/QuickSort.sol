@@ -10,7 +10,6 @@ import {QuickSort} from "src/sorting/QuickSort.sol";
  */
 contract QuickSortTestUnit is Test {
     using QuickSort for uint256[];
-    using QuickSort for int256[];
 
     function testGetSorted5() public {
         uint256[] memory array = new uint256[](5);
@@ -37,7 +36,7 @@ contract QuickSortTestUnit is Test {
         array[3] = 500;
         array[4] = 300;
 
-        array.quickSort();
+        array.sort();
         assertEq(array[0], 100);
         assertEq(array[1], 200);
         assertEq(array[2], 300);
@@ -56,7 +55,7 @@ contract QuickSortTestUnit is Test {
             array[offset + 4] = 300 + i;
         }
 
-        array.quickSort();
+        array.sort();
         assertEq(array[0], 100);
         assertEq(array[1], 101);
         assertEq(array[2], 102);
@@ -73,7 +72,7 @@ contract QuickSortTestUnit is Test {
         array[4] = 3;
         array[5] = 3;
 
-        array.quickSort();
+        array.sort();
         assertEq(array[0], 0);
         assertEq(array[1], 1);
         assertEq(array[2], 1);

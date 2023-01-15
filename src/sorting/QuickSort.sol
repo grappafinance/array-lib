@@ -47,7 +47,7 @@ library QuickSort {
     /**
      * @dev sort array x in place with quick sort algorithm
      */
-    function quickSort(int256[] memory x) internal pure {
+    function sort(int256[] memory x) internal pure {
         quickSort(x, int256(0), int256(x.length - 1));
     }
 
@@ -146,7 +146,7 @@ library QuickSort {
     /**
      * @dev sort array x in place with quick sort algorithm
      */
-    function quickSort(uint256[] memory x) internal pure {
+    function sort(uint256[] memory x) internal pure {
         quickSort(x, int256(0), int256(x.length - 1));
     }
 
