@@ -13,13 +13,12 @@ library BubbleSort {
         unchecked {
             if (arr.length <= 1) return;
             for (uint256 i; i < arr.length; ++i) {
-                for (uint256 j = i + 1; j< arr.length; ++j) {
+                for (uint256 j = i + 1; j < arr.length; ++j) {
                     if (arr[i] > arr[j]) {
                         (arr[i], arr[j]) = (arr[j], arr[i]);
                     }
-                }                
+                }
             }
         }
     }
-
 }
