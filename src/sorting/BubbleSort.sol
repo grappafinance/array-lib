@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 /**
  * @title BubbleSort
- * @author dsshap
+ * @author antoncoding
  */
 library BubbleSort {
     /**
