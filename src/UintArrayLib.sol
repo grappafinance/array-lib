@@ -111,11 +111,18 @@ library UintArrayLib {
      * @return s sum
      */
     function sum(uint256[] memory x) internal pure returns (uint256 s) {
-        for (uint256 i; i < x.length;) {
-            s += x[i];
+        require(x.length !=0,"EMPTY_ARRAY")
+        assembly {
+            // Memory layout of input array
+            // Consequent slots of 32 bytes each
+            // {length of array}{x[0]}{x[1]}{x[2]}....
 
-            unchecked {
-                ++i;
+            //Cache the pointer to end of the array to be used in for loop
+            let end := add(add(x,0x20),shl(5,mload(x)))
+
+            // iszero(eq()) is cheaper than lt(i,n)
+            for{ let i:= add(x,0x20)} iszero(eq(i,n)) {i:=add(i,0x20)}{
+                s := add(s,mload(i))
             }
         }
     }
