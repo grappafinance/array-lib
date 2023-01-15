@@ -21,4 +21,20 @@ library BubbleSort {
             }
         }
     }
+
+    /**
+     * @dev sort an int256 array in place with bubble sort
+     */
+    function sort(int256[] memory arr) internal pure {
+        unchecked {
+            if (arr.length <= 1) return;
+            for (uint256 i; i < arr.length; ++i) {
+                for (uint256 j = i + 1; j < arr.length; ++j) {
+                    if (arr[i] > arr[j]) {
+                        (arr[i], arr[j]) = (arr[j], arr[i]);
+                    }
+                }
+            }
+        }
+    }
 }

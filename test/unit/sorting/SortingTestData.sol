@@ -62,4 +62,6 @@ contract SortingTestData is Test {
         assertEq(array[3], 1);
         assertEq(array[4], 3);
     }
+
+    function test() public {}
 }
