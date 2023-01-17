@@ -1,6 +1,11 @@
 {
   "name": "@grappafinance/array-utils",
-  "author": "antoncoding",
+  "contributors": [
+    "dsshap",
+    "antoncoding",
+    "hashnoteleo",
+    "fletch153"
+  ],
   "version": "0.1.0",
   "description": "array utils",
   "devDependencies": {
