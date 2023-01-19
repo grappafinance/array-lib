@@ -6,6 +6,8 @@ import {SafeCast} from "openzeppelin/utils/math/SafeCast.sol";
 library UintArrayLib {
     using SafeCast for uint256;
 
+    error IntegerOverflow();
+
     /**
      * @dev Returns maximal element in array
      */
@@ -112,6 +114,7 @@ library UintArrayLib {
      */
     function sum(uint256[] memory x) internal pure returns (uint256 s) {
         require(x.length !=0,"EMPTY_ARRAY");
+        uint256 j;
         assembly {
             // Memory layout of input array
             // Consequent slots of 32 bytes each
@@ -122,7 +125,12 @@ library UintArrayLib {
 
             // iszero(eq()) is cheaper than lt(i,n)
             for{ let i:= add(x,0x20)} iszero(eq(i,end)) {i:=add(i,0x20)}{
+                j := s
                 s := add(s,mload(i))
+                if lt(s,j){
+                    mstore(0x00,0xa5bd5d7f)
+                    revert(0x1c,0x04)
+                }
             }
         }
     }
