@@ -113,23 +113,31 @@ library UintArrayLib {
      * @return s sum
      */
     function sum(uint256[] memory x) internal pure returns (uint256 s) {
-        require(x.length !=0,"EMPTY_ARRAY");
+        require(x.length != 0);
+        // Variable to implement the overflow logic
         uint256 j;
         assembly {
-            // Memory layout of input array
-            // Consequent slots of 32 bytes each
+            // The Memory layout of input array looks like this
+            // It has Consequent slots of 32 bytes each
             // {length of array}{x[0]}{x[1]}{x[2]}....
 
             //Cache the pointer to end of the array to be used in for loop
-            let end := add(add(x,0x20),shl(5,mload(x)))
+            //First param to add() is a memory pointer to start of the first element slot
+            //Second param to add() is a memory pointer to end of the last element slot
+            let end := add(add(x, 0x20), shl(5, mload(x)))
 
             // iszero(eq()) is cheaper than lt(i,n)
-            for{ let i:= add(x,0x20)} iszero(eq(i,end)) {i:=add(i,0x20)}{
+            // We increment i by 32 bytes
+            for { let i := add(x, 0x20) } iszero(eq(i, end)) { i := add(i, 0x20) } {
                 j := s
-                s := add(s,mload(i))
-                if lt(s,j){
-                    mstore(0x00,0xa5bd5d7f)
-                    revert(0x1c,0x04)
+                s := add(s, mload(i))
+                if lt(s, j) {
+                    // Storing the 4byte selector of error IntegerOverflow()
+                    // mstore()
+                    mstore(0x00, 0xa5bd5d7f)
+                    // revert(memory offset,size of return data)
+                    // revert(28,4)
+                    revert(0x1c, 0x04)
                 }
             }
         }

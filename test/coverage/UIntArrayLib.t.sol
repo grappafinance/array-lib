@@ -124,6 +124,17 @@ contract UintArrayLibCoverage is Test {
         assertEq(tester.sum(arr), 15);
     }
 
+    function testSum_RevertIfIntegerOverflow() public {
+        uint256[] memory arr = new uint256[](5);
+        arr[0] = 1;
+        arr[1] = 5;
+        arr[2] = 4;
+        arr[3] = 2**256 - 1;
+        arr[4] = 6;
+        vm.expectRevert(bytes4(keccak256("IntegerOverflow()")));
+        uint256 result = tester.sum(arr);
+    }
+
     function testMinMax() public {
         uint256[] memory arr = _getDefaultArray();
         (uint256 min_, uint256 max_) = tester.minMax(arr);
