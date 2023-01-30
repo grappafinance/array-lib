@@ -29,8 +29,10 @@ library BubbleSort {
         idxs = new uint256[](arr.length);
         unchecked {
             uint256 i;
-            for (i; i < arr.length; ++i) idxs[i] = i;
-            if (arr.length <= 1) return(idxs);
+            for (i; i < arr.length; ++i) {
+                idxs[i] = i;
+            }
+            if (arr.length <= 1) return (idxs);
             for (i = 0; i < arr.length; ++i) {
                 for (uint256 j = i + 1; j < arr.length; ++j) {
                     if (arr[i] > arr[j]) {
@@ -65,8 +67,10 @@ library BubbleSort {
         idxs = new uint256[](arr.length);
         unchecked {
             uint256 i;
-            for (i; i < arr.length; ++i) idxs[i] = i;
-            if (arr.length <= 1) return(idxs);
+            for (i; i < arr.length; ++i) {
+                idxs[i] = i;
+            }
+            if (arr.length <= 1) return (idxs);
             for (i = 0; i < arr.length; ++i) {
                 for (uint256 j = i + 1; j < arr.length; ++j) {
                     if (arr[i] > arr[j]) {
