@@ -95,6 +95,16 @@ contract QuickSortLibCoverage is Test {
         return arr;
     }
 
+    function _getDefaultIntDupArray() internal pure returns (int256[] memory) {
+        int256[] memory arr = new int256[](5);
+        arr[0] = 1;
+        arr[1] = 1;
+        arr[2] = 1;
+        arr[3] = 1;
+        arr[4] = 1;
+        return arr;
+    }
+
     /**
      * util for test data
      */
@@ -132,6 +142,23 @@ contract QuickSortLibCoverage is Test {
         assertEq(indexes[1], 2); // index of v = -2
         assertEq(indexes[2], 0);
         assertEq(indexes[3], 3);
+        assertEq(indexes[4], 1);
+    }
+
+    function testArgSortIntDup() public {
+        // default [1, 5, -2, 4, -3]
+        int256[] memory arr = _getDefaultIntDupArray();
+        (int256[] memory sorted, uint256[] memory indexes) = tester.argSort(arr);
+        assertEq(sorted[0], 1);
+        assertEq(sorted[1], 1);
+        assertEq(sorted[2], 1);
+        assertEq(sorted[3], 1);
+        assertEq(sorted[4], 1);
+
+        assertEq(indexes[0], 3);
+        assertEq(indexes[1], 4);
+        assertEq(indexes[2], 2);
+        assertEq(indexes[3], 0);
         assertEq(indexes[4], 1);
     }
 
